@@ -1,6 +1,7 @@
 Grassroots::Application.routes.draw do
+  resources :categories
   resources :ideas
-
+  root :to => 'grassroots#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

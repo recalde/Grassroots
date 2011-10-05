@@ -1,127 +1,27 @@
-<div id="grass-body">
-</div>  
+<h1>Listing ideas</h1>
 
-<script id="topicsTemplate" type="text/x-jquery-tmpl">
-<div id="tabs">
-	<ul>
-    {{each topics}}
-        <li><a href="#${id}">${name}</a></li>
-    {{/each}}
-	</ul>
-	{{each topics}}
-	    <div id="${id}"></div>
-	{{/each}}
-</div>
-</script>
+<table>
+  <tr>
+	<th>Category</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
 
-<script id="ideaTemplate" type="text/x-jquery-tmpl">
+<% @ideas.each do |idea| %>
+  <tr>
+	<td><%= idea.category_id %></td>
+    <td><%= idea.subject %></td>
+    <td><%= idea.description %></td>
+    <td><%= link_to 'Show', idea %></td>
+    <td><%= link_to 'Edit', edit_idea_path(idea) %></td>
+    <td><%= link_to 'Destroy', idea, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
 
-<div class="idea ui-corner-all">
-	<div class="idea-vote ui-corner-all">
-		<div class="vote-count">${votes}</div>
-		<div class="vote-yea">Yea</div>
-		<div class="vote-nae">Nae</div>
-	</div>
-	<div class="idea-body">
-		<div class="idea-subject">
-			${subject}
-		</div>
-		<div class="idea-text">
-			${description}
-		</div>
-		<div class="idea-user">
-			Posted by ${user} (${timestamp})
-		</div>
-	</div>
-</div>
-    
-</script>
+<br />
 
-<script id="ideaDialogTemplate" type="text/x-jquery-tmpl">
-
-<div class="idea-vote ui-corner-all">
-	<div class="vote-count">${votes}</div>
-	<div class="vote-yea">Yea</div>
-	<div class="vote-nae">Nae</div>
-</div>
-<div class="idea-body">
-	<div class="idea-text">
-		${description}
-	</div>
-	<div class="idea-user">
-		Posted by ${user} (${timestamp})
-	</div>
-</div>
-    
-</script>
-
-<script>
-
-
-	var topics = { topics: [
-		{id:'popular', name:'Most Popular'},
-		{id:'budget', name:'Budget'},
-		{id:'economy', name:'Economy'},
-		{id:'education', name:'Education'},
-		{id:'energy', name:'Energy'},
-		{id:'environment', name:'Environment'},
-		{id:'government', name:'Government'},
-		{id:'health', name:'Health'},
-		{id:'politics', name:'Politics'},
-		{id:'services', name:'Services'}	
-	]};
-	
-	var ideas = [{ 
-		votes: 24,
-		subject: 'Repeal the Bush Tax Cuts',
-		description: 'Repeal tax cuts for the wealthy.',
-		user: 'rob',
-		timestamp: '1 hour ago'
-	},
-	{ 
-		votes: 16,
-		subject: 'Privatize Social Security',
-		description: 'Privatize the current social security system so that it does not bankrupt our country.',
-		user: 'cara',
-		timestamp: '2 hours ago'
-	}];
-	
-	$(function () { 
-
-		$('.vote-yea').live('click', function(){
-			$(this).tmplItem().data.votes++;
-			$(this).tmplItem().update();
-		});
-		$('.vote-nae').live('click', function(){
-			$(this).tmplItem().data.votes--;
-			$(this).tmplItem().update();
-		});
-		$('.idea-subject').live('click', function() {
-			var idea = $(this).tmplItem().data;
-			var dialogDiv = $('<div></div>');
-			dialogDiv.attr('title', idea.subject);
-			var renderDialog = $('#ideaDialogTemplate').tmpl(idea);
-			renderDialog.appendTo(dialogDiv);
-			dialogDiv.dialog( { width:600, height:250 } );
-		});
-		var renderTopics = $('#topicsTemplate').tmpl(topics);
-		$('#grass-body').empty();
-		renderTopics.appendTo('#grass-body');
-		
-		$('#tabs').tabs();
-
-		var renderIdeas = $('#ideaTemplate').tmpl(ideas);
-		$('#popular').empty();
-		renderIdeas.appendTo('#popular'); 
-		
-		$.ajax({
-			url: '/ideas',
-			dataType: 'json',
-			success: function(data) {
-				var r2 = $('#ideaTemplate').tmpl(data);
-				$('#budget').empty();
-				r2.appendTo('#budget');
-			}
-		});
-	});
-</script>
+<%= link_to 'New Idea', new_idea_path %>
