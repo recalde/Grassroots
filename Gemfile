@@ -28,3 +28,6 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'ruby-debug'
 
+gem "pg", :group => :production
+gem "sqlite3-ruby", :group => :development
+
