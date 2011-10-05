@@ -1,29 +1,3 @@
-body {
-	padding:5px;
-	background-color:#E5E5E5;
-	font-family:'lucida grande',tahoma,verdana,arial,sans-serif;
-}
-#grass-header {
-	width:100%;
-	height:41px;
-	background-color:#404040;
-	color:white;
-}
-#grass-header-text {
-	padding:5px;
-	float:left;
-	font-size:28px;
-}
-#grass-header-menu {
-	float:right;
-	color:white;
-	margin-top:9px;
-	margin-right:10px;
-}
-#grass-header-menu a {
-	color:white;	
-}
-
 .idea {
 	padding: 4px;
 	background-color:#E5E5E5;
