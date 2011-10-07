@@ -83,6 +83,7 @@
 	
 	$(function () { 
 
+		<% if user_signed_in? %>
 		$('.vote-yea').live('click', function() {
 			
 			var tmplItem = $(this).tmplItem();
@@ -96,18 +97,6 @@
 			vote(tmplItem.data.id, 'nae');
 			tmplItem.data.vote_tally--;
 			$(this).tmplItem().update();
-		});
-		
-		$('.idea-subject').live('click', function() {
-			var idea = $(this).tmplItem().data;
-			var dialogDiv = $('<div></div>');
-			dialogDiv.attr('title', idea.subject);
-			var renderDialog = $('#ideaDialogTemplate').tmpl(idea);
-			renderDialog.appendTo(dialogDiv);
-			dialogDiv.dialog({ 
-				width:600, 
-				height:250
-			});
 		});
 
 		$('.new-idea').live('click', function() {
@@ -150,10 +139,41 @@
 				}
 			});
 		});
+		<% else %>
+		$('.vote-yea').live('click', login_dialog);
+		$('.vote-nae').live('click', login_dialog);
+		$('.new-idea').live('click', login_dialog);
+		<% end %>
 
+		$('.idea-subject').live('click', function() {
+			var idea = $(this).tmplItem().data;
+			var dialogDiv = $('<div></div>');
+			dialogDiv.attr('title', idea.subject);
+			var renderDialog = $('#ideaDialogTemplate').tmpl(idea);
+			renderDialog.appendTo(dialogDiv);
+			dialogDiv.dialog({ 
+				width:600, 
+				height:250
+			});
+		});
 		renderTopics();
 		
 	});
+	
+	function login_dialog(){
+		var dialogDiv = $('<div></div>');
+		dialogDiv.attr('title', 'You are not logged in.');
+		dialogDiv.html('Please login or register to continue.');
+		dialogDiv.dialog({ 
+			width:400, 
+			height:200,
+			buttons: {
+				"Ok": function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+	}
 	
 	function vote(vote_id, vote) {
 		var data = { idea_id: vote_id, vote: vote };

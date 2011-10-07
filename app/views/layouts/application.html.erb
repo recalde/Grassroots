@@ -16,10 +16,9 @@
 			Grassroots Policy
 		</div>
 		<div id="grass-header-menu">
-			<a href="/ideas/">My Ideas</a>&nbsp;|&nbsp;
-			<a href="/categories/">My Issues</a>&nbsp;|&nbsp;
-
 			<% if user_signed_in? %>
+				<a href="/ideas/">My Ideas</a>&nbsp;|&nbsp;
+				<a href="/categories/">My Issues</a>&nbsp;|&nbsp;
 				<%= link_to('Edit registration', edit_user_registration_path) %>&nbsp;|&nbsp;
 				<%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
 			<% else %>
@@ -31,6 +30,12 @@
 	</div>
 	
 	<%= yield %>
-
+	
+	<script>
+		$(function () { 
+			$('#grass-header').click(function() {
+				window.location.href = "/";
+			});
+	</script>
 </body>
 </html>

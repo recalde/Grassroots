@@ -8,6 +8,7 @@ body {
 	height:41px;
 	background-color:#404040;
 	color:white;
+	cursor:pointer;
 }
 #grass-header-text {
 	padding:5px;
