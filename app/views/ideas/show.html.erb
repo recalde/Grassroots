@@ -1,13 +1,35 @@
 <p id="notice"><%= notice %></p>
-
+<p>
+  <b>Category:</b>
+  <%= @idea.category_name %>
+</p>
 <p>
   <b>Subject:</b>
   <%= @idea.subject %>
 </p>
-
 <p>
   <b>Description:</b>
   <%= @idea.description %>
+</p>
+<p>
+  <b>Total Votes:</b>
+  <%= @idea.total_votes %>
+</p>
+<p>
+  <b>Yae Votes:</b>
+  <%= @idea.yae_votes %>
+</p>
+<p>
+  <b>Nae Votes:</b>
+  <%= @idea.nae_votes %>
+</p>
+<p>
+  <b>Vote Tally:</b>
+  <%= @idea.vote_tally %>
+</p>
+<p>
+  <b>Rank:</b>
+  <%= @idea.rank %>
 </p>
 
 

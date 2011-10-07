@@ -12,6 +12,10 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :category_id %><br />
+    <%= f.number_field :category_id %>
+  </div>
+  <div class="field">
     <%= f.label :subject %><br />
     <%= f.text_field :subject %>
   </div>
@@ -20,8 +24,16 @@
     <%= f.text_field :description %>
   </div>
   <div class="field">
-    <%= f.label :category_id %><br />
-    <%= f.text_field :category_id %>
+    <%= f.label :yae_votes %><br />
+    <%= f.number_field :yae_votes %>
+  </div>
+  <div class="field">
+    <%= f.label :nae_votes %><br />
+    <%= f.number_field :nae_votes %>
+  </div>
+  <div class="field">
+    <%= f.label :rank %><br />
+    <%= f.number_field :rank %>
   </div>
   <div class="actions">
     <%= f.submit %>

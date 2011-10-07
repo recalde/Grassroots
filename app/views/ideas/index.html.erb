@@ -5,6 +5,12 @@
 	<th>Category</th>
     <th>Name</th>
     <th>Description</th>
+	<th>User</th>
+    <th>Yae Votes</th>
+    <th>Nae Votes</th>
+	<th>Total Votes</th>
+	<th>Vote Tally</th>
+	<th>Rank</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,9 +18,15 @@
 
 <% @ideas.each do |idea| %>
   <tr>
-	<td><%= idea.category_id %></td>
+	<td><%= idea.category_name %></td>
     <td><%= idea.subject %></td>
     <td><%= idea.description %></td>
+	<td><%= idea.user_alias %></td>
+	<td><%= idea.yae_votes %></td>
+	<td><%= idea.nae_votes %></td>
+	<td><%= idea.total_votes %></td>
+	<td><%= idea.vote_tally %></td>
+	<td><%= idea.rank %></td>
     <td><%= link_to 'Show', idea %></td>
     <td><%= link_to 'Edit', edit_idea_path(idea) %></td>
     <td><%= link_to 'Destroy', idea, :confirm => 'Are you sure?', :method => :delete %></td>

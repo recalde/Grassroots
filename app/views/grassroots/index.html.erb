@@ -5,20 +5,19 @@
 <div id="tabs">
 	<ul>
     {{each topics}}
-        <li><a href="#${id}">${name}</a></li>
+        <li><a href="#category-${id}">${name}</a></li>
     {{/each}}
 	</ul>
 	{{each topics}}
-	    <div id="${id}"></div>
+	    <div id="category-${id}"></div>
 	{{/each}}
 </div>
 </script>
 
 <script id="ideaTemplate" type="text/x-jquery-tmpl">
-
 <div class="idea ui-corner-all">
 	<div class="idea-vote ui-corner-all">
-		<div class="vote-count">${votes}</div>
+		<div class="vote-count">${vote_tally}</div>
 		<div class="vote-yea">Yea</div>
 		<div class="vote-nae">Nae</div>
 	</div>
@@ -30,17 +29,15 @@
 			${description}
 		</div>
 		<div class="idea-user">
-			Posted by ${user} (${timestamp})
+			Posted by ${user_alias} (${created_at})
 		</div>
 	</div>
 </div>
-    
 </script>
 
 <script id="ideaDialogTemplate" type="text/x-jquery-tmpl">
-
 <div class="idea-vote ui-corner-all">
-	<div class="vote-count">${votes}</div>
+	<div class="vote-count">${vote_tally}</div>
 	<div class="vote-yea">Yea</div>
 	<div class="vote-nae">Nae</div>
 </div>
@@ -49,10 +46,23 @@
 		${description}
 	</div>
 	<div class="idea-user">
-		Posted by ${user} (${timestamp})
+		Posted by ${user_alias} (${created_at})
 	</div>
 </div>
-    
+</script>
+
+<script id="newIdeaDialogTemplate" type="text/x-jquery-tmpl">
+<div>
+	<div class="dialog-input">
+		Subject:<br/>
+		<input id="new_idea_subject" type="text" /> 
+	</div>
+	<div class="dialog-input">
+		Description:<br/>
+		<input id="new_idea_description" type="text" /> 
+	</div>
+	<input id="new_idea_category_id" type="hidden" value="${category_id}" />
+</div>
 </script>
 
 <script>
@@ -71,57 +81,127 @@
 		{id:'services', name:'Services'}	
 	]};
 	
-	var ideas = [{ 
-		votes: 24,
-		subject: 'Repeal the Bush Tax Cuts',
-		description: 'Repeal tax cuts for the wealthy.',
-		user: 'rob',
-		timestamp: '1 hour ago'
-	},
-	{ 
-		votes: 16,
-		subject: 'Privatize Social Security',
-		description: 'Privatize the current social security system so that it does not bankrupt our country.',
-		user: 'cara',
-		timestamp: '2 hours ago'
-	}];
-	
 	$(function () { 
 
-		$('.vote-yea').live('click', function(){
-			$(this).tmplItem().data.votes++;
+		$('.vote-yea').live('click', function() {
+			
+			var tmplItem = $(this).tmplItem();
+			vote(tmplItem.data.id, 'yae');
+			tmplItem.data.vote_tally++;
 			$(this).tmplItem().update();
 		});
+		
 		$('.vote-nae').live('click', function(){
-			$(this).tmplItem().data.votes--;
+			var tmplItem = $(this).tmplItem();
+			vote(tmplItem.data.id, 'nae');
+			tmplItem.data.vote_tally--;
 			$(this).tmplItem().update();
 		});
+		
 		$('.idea-subject').live('click', function() {
 			var idea = $(this).tmplItem().data;
 			var dialogDiv = $('<div></div>');
 			dialogDiv.attr('title', idea.subject);
 			var renderDialog = $('#ideaDialogTemplate').tmpl(idea);
 			renderDialog.appendTo(dialogDiv);
-			dialogDiv.dialog( { width:600, height:250 } );
+			dialogDiv.dialog({ 
+				width:600, 
+				height:250
+			});
 		});
-		var renderTopics = $('#topicsTemplate').tmpl(topics);
-		$('#grass-body').empty();
-		renderTopics.appendTo('#grass-body');
-		
-		$('#tabs').tabs();
 
-		var renderIdeas = $('#ideaTemplate').tmpl(ideas);
-		$('#popular').empty();
-		renderIdeas.appendTo('#popular'); 
+		$('.new-idea').live('click', function() {
+			var category = $(this).attr('category_id');
+			var data = { category_id: category };
 		
+			var newIdeaDiv = $('<div></div>');
+			newIdeaDiv.attr('title', 'New Idea');
+			
+			var renderDialog = $('#newIdeaDialogTemplate').tmpl(data);
+			renderDialog.appendTo(newIdeaDiv);
+			newIdeaDiv.dialog({
+				width:600,
+				height:250,
+				buttons: {
+					"Create": function() {
+						var data = { 
+							new_idea_subject: $('#new_idea_subject').val(), 
+							new_idea_description: $('#new_idea_description').val(), 
+							new_idea_category_id: $('#new_idea_category_id').val()
+						};
+						
+						$(this).dialog("close");
+						
+						$.ajax({
+							url: '/new_idea',
+							dataType: 'json',
+							data: data,
+							success: function() {
+								
+								renderTopics();
+							}
+						});
+						
+						
+					},
+					Cancel: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+		});
+
+		renderTopics();
+		
+	});
+	
+	function vote(vote_id, vote) {
+		var data = { idea_id: vote_id, vote: vote };
+		
+		return $.ajax({
+			url: '/vote',
+			dataType: 'json',
+			data: data
+		});	
+	}
+	
+	function renderTopics() {
+		$.ajax({
+			url: '/categories',
+			dataType: 'json',
+			success: function(data) {
+				var topics = { topics: data };
+				var renderTopics = $('#topicsTemplate').tmpl(topics);
+				$('#grass-body').empty();
+				renderTopics.appendTo('#grass-body');
+				$('#tabs').tabs();
+				
+				$(data).each(function(){
+					var category_id = this.id;
+					renderIdeas(category_id);	
+				})
+				
+			}
+		});
+	}
+	
+	function renderIdeas(category_id) {
+		var category_filter = { category_id: category_id };
 		$.ajax({
 			url: '/ideas',
 			dataType: 'json',
+			data: category_filter,
 			success: function(data) {
-				var r2 = $('#ideaTemplate').tmpl(data);
-				$('#budget').empty();
-				r2.appendTo('#budget');
+				var render = $('#ideaTemplate').tmpl(data);
+				var category_div = $('#category-' + category_id);
+				category_div.empty();
+				render.appendTo(category_div);
+				
+				var new_button = $('<button class="new-idea">New Idea</button>');
+				new_button.appendTo(category_div);
+				new_button.attr('category_id', category_id);
 			}
 		});
-	});
+	}
+	
 </script>

@@ -47,13 +47,13 @@ body {
 	text-align:center;
 	color:green;
 	font-size:12px;
-	cursor:hand;
+	cursor:pointer;
 }
 .vote-nae {
 	text-align:center;
 	color:red;
 	font-size:12px;
-	cursor:hand;
+	cursor:pointer;
 }
 .idea-body {
 	height:55px;
@@ -70,4 +70,8 @@ body {
 .idea-user {
 	font-size:12px;
 	color:#404040;
+}
+.dialog_input {
+	font-size:18px;
+	color:black;
 }

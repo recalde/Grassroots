@@ -2,11 +2,17 @@ class IdeasController < ApplicationController
   # GET /ideas
   # GET /ideas.json
   def index
-    @ideas = Idea.all
+    if params[:category_id]
+      @ideas = Idea.where(:category_id => params[:category_id])
+    else 
+      @ideas = Idea.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render :json => @ideas }
+      format.json { 
+        render :json => @ideas.to_json(:methods => [:vote_tally, :category_name, :user_alias]) 
+      }
     end
   end
 
@@ -25,10 +31,11 @@ class IdeasController < ApplicationController
   # GET /ideas/new.json
   def new
     @idea = Idea.new
-
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render :json => @idea }
+      
     end
   end
 
@@ -41,7 +48,7 @@ class IdeasController < ApplicationController
   # POST /ideas.json
   def create
     @idea = Idea.new(params[:idea])
-
+    @idea.user_id = current_user.id
     respond_to do |format|
       if @idea.save
         format.html { redirect_to @idea, :notice => 'Idea was successfully created.' }
