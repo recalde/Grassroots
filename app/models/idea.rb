@@ -19,7 +19,48 @@ class Idea < ActiveRecord::Base
   end
   
   def calculate_rank
-    total_votes + yae_votes
+    hot
   end
   
+  
+  
+
+  def epoch_seconds
+    epoch = DateTime.new(1970, 1, 1)
+    
+    td = created_at - epoch
+    
+    return td.seconds #td.days.round * 86400 + td.seconds / 1000000
+    
+  end
+
+  def score
+    2 * yae_votes - nae_votes
+  end
+
+  def hot
+    s = vote_tally
+    l = [s.abs, 1].max
+    order = Math.log10(l)
+    if s > 0
+      sign = 1
+    elsif s < 0
+      sign = -1
+    else
+      sign = 0
+    end
+    
+    seconds = epoch_seconds - 1134028003
+    score = order + sign * seconds / 180000
+    
+    logger.debug "**** CALCULATING SCORE ****"
+    logger.debug "score: #{s}"
+    logger.debug "order: #{order}"
+    logger.debug "seconds: #{seconds}"
+    logger.debug "score: #{score}"
+
+    
+    return score
+  end
+      
 end

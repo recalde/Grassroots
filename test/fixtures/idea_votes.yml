@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  idea_id: 1
+  user_id: 1
+  vote: MyString
+
+two:
+  idea_id: 1
+  user_id: 1
+  vote: MyString

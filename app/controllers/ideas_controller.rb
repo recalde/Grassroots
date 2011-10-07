@@ -3,9 +3,9 @@ class IdeasController < ApplicationController
   # GET /ideas.json
   def index
     if params[:category_id]
-      @ideas = Idea.where(:category_id => params[:category_id])
+      @ideas = Idea.where(:category_id => params[:category_id]).order("rank DESC")
     else 
-      @ideas = Idea.all
+      @ideas = Idea.order("rank DESC")
     end
 
     respond_to do |format|

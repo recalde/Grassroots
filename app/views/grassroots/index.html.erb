@@ -87,16 +87,18 @@
 		$('.vote-yea').live('click', function() {
 			
 			var tmplItem = $(this).tmplItem();
-			vote(tmplItem.data.id, 'yae');
-			tmplItem.data.vote_tally++;
-			$(this).tmplItem().update();
+			vote(tmplItem.data.id, 'yae').success(function() {
+				tmplItem.data.vote_tally++;
+				$(this).tmplItem().update();
+			});
 		});
 		
 		$('.vote-nae').live('click', function(){
 			var tmplItem = $(this).tmplItem();
-			vote(tmplItem.data.id, 'nae');
-			tmplItem.data.vote_tally--;
-			$(this).tmplItem().update();
+			vote(tmplItem.data.id, 'nae').success(function() {
+				tmplItem.data.vote_tally--;
+				$(this).tmplItem().update();
+			});
 		});
 
 		$('.new-idea').live('click', function() {
@@ -120,6 +122,7 @@
 						};
 						
 						$(this).dialog("close");
+						$(this).remove();
 						
 						$.ajax({
 							url: '/new_idea',
@@ -132,9 +135,12 @@
 						});
 						
 						
+						
 					},
 					Cancel: function() {
-						$( this ).dialog( "close" );
+						
+						$(this).dialog( "close" );
+						$(this).remove();
 					}
 				}
 			});

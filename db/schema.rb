@@ -10,11 +10,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111006230556) do
+ActiveRecord::Schema.define(:version => 20111007210421) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
     t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "idea_votes", :force => true do |t|
+    t.integer  "idea_id"
+    t.integer  "user_id"
+    t.string   "vote"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -27,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20111006230556) do
     t.integer  "category_id"
     t.integer  "yae_votes"
     t.integer  "nae_votes"
-    t.integer  "rank"
+    t.float    "rank"
     t.integer  "user_id"
   end
 
