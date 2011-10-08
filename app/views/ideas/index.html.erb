@@ -27,9 +27,11 @@
 	<td><%= idea.total_votes %></td>
 	<td><%= idea.vote_tally %></td>
 	<td><%= idea.rank %></td>
+	<% if current_user.alias == "Rob" %>
     <td><%= link_to 'Show', idea %></td>
     <td><%= link_to 'Edit', edit_idea_path(idea) %></td>
     <td><%= link_to 'Destroy', idea, :confirm => 'Are you sure?', :method => :delete %></td>
+	<% end %>
   </tr>
 <% end %>
 </table>
