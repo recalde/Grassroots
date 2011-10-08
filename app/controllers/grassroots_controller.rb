@@ -30,7 +30,7 @@ class GrassrootsController < ApplicationController
 
         respond_to do |format|
           if @idea.save
-            format.json { head :ok }
+            format.json { render :json => @idea, :status => :created, :location => @idea }
           else
             format.json { render :json => @idea.errors, :status => :unprocessable_entity }
           end

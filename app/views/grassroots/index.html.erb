@@ -66,20 +66,6 @@
 </script>
 
 <script>
-
-
-	var topics = { topics: [
-		{id:'popular', name:'Most Popular'},
-		{id:'budget', name:'Budget'},
-		{id:'economy', name:'Economy'},
-		{id:'education', name:'Education'},
-		{id:'energy', name:'Energy'},
-		{id:'environment', name:'Environment'},
-		{id:'government', name:'Government'},
-		{id:'health', name:'Health'},
-		{id:'politics', name:'Politics'},
-		{id:'services', name:'Services'}	
-	]};
 	
 	$(function () { 
 
@@ -87,17 +73,17 @@
 		$('.vote-yea').live('click', function() {
 			
 			var tmplItem = $(this).tmplItem();
-			vote(tmplItem.data.id, 'yae').success(function() {
+			vote(tmplItem.data.id, 'yae', function() {
 				tmplItem.data.vote_tally++;
-				$(this).tmplItem().update();
+				tmplItem.update();
 			});
 		});
 		
 		$('.vote-nae').live('click', function(){
 			var tmplItem = $(this).tmplItem();
-			vote(tmplItem.data.id, 'nae').success(function() {
+			vote(tmplItem.data.id, 'nae', function() {
 				tmplItem.data.vote_tally--;
-				$(this).tmplItem().update();
+				tmplItem.update();
 			});
 		});
 
@@ -129,8 +115,7 @@
 							dataType: 'json',
 							data: data,
 							success: function() {
-								
-								renderTopics();
+								renderIdeas(category);
 							}
 						});
 						
@@ -181,14 +166,15 @@
 		});
 	}
 	
-	function vote(vote_id, vote) {
-		var data = { idea_id: vote_id, vote: vote };
+	function vote(vote_id, vote, success) {
+		var voteData = { idea_id: vote_id, vote: vote };
 		
-		return $.ajax({
+		$.ajax({
 			url: '/vote',
 			dataType: 'json',
-			data: data
-		});	
+			data: voteData,
+			success: success
+		});
 	}
 	
 	function renderTopics() {

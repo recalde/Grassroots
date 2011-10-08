@@ -28,7 +28,11 @@ class Idea < ActiveRecord::Base
   def epoch_seconds
     epoch = DateTime.new(1970, 1, 1)
     
-    td = created_at - epoch
+    if created_at 
+      td = created_at - epoch
+    else
+      td = DateTime.now - epoch
+    end
     
     return td.seconds #td.days.round * 86400 + td.seconds / 1000000
     
