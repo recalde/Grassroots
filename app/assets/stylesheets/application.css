@@ -24,6 +24,10 @@ body {
 #grass-header-menu a {
 	color:white;	
 }
+.grass-body {
+	padding: 4px;
+	background-color:white;
+}
 
 .idea {
 	padding: 4px;

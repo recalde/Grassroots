@@ -1,8 +1,7 @@
 class GrassrootsController < ApplicationController
   def index
-    respond_to do |format|
-      format.html # index.html.erb
-    end
+
+    render :layout => 'header_only'
   end 
   
   # GET /vote

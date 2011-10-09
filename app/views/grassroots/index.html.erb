@@ -23,7 +23,7 @@
 	</div>
 	<div class="idea-body">
 		<div class="idea-subject">
-			${subject}
+			<a href="/ideas/${id}">${subject}</a>
 		</div>
 		<div class="idea-text">
 			${description}
@@ -136,6 +136,7 @@
 		$('.new-idea').live('click', login_dialog);
 		<% end %>
 
+/*
 		$('.idea-subject').live('click', function() {
 			var idea = $(this).tmplItem().data;
 			var dialogDiv = $('<div></div>');
@@ -147,6 +148,8 @@
 				height:250
 			});
 		});
+*/
+
 		renderTopics();
 		
 	});
