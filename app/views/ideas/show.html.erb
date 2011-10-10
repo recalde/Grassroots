@@ -21,9 +21,17 @@
 	
 </div>
 <div class="idea ui-corner-all">
-	<% @votes.each do |vote| %>
-		<%= vote.user_id %>, 
-	<% end %>
+
+	<div class="idea-body">
+		<div class="idea-subject">
+			Votes:
+		</div>
+		<div class="idea-text">
+		<% @votes.each do |vote| %>
+			<%= vote.user_alias %> 
+		<% end %>
+		</div>
+	</div>
 </div>
 
 <%= link_to 'Edit', edit_idea_path(@idea) %>
@@ -37,13 +45,15 @@
 		
 		$('.vote-yea').live('click', function() {
 			vote(<%= @idea.id %>, 'yae', function(data) {
-				$('.vote-count').html(data.vote_tally);
+				location.reload(true)
+				//$('.vote-count').html(data.vote_tally);
 			});
 		});
 		
 		$('.vote-nae').live('click', function(){
 			vote(<%= @idea.id %>, 'nae', function(data) {
-				$('.vote-count').html(data.vote_tally);
+				location.reload(true)
+				//$('.vote-count').html(data.vote_tally);
 			});
 		});
 		

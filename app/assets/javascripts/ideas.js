@@ -97,7 +97,7 @@ function new_idea() {
 	renderDialog.appendTo(newIdeaDiv);
 	newIdeaDiv.dialog({
 		width:600,
-		height:300,
+		height:400,
 		buttons: {
 			"Create": function() {
 				var new_idea_data = { 
