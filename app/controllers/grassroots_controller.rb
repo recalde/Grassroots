@@ -9,32 +9,51 @@ class GrassrootsController < ApplicationController
   def vote
     if user_signed_in?
       @idea = Idea.find(params[:idea_id])
-      @vote = params[:vote]
+      vote = params[:vote]
       @ideavote = IdeaVote.where(:user_id => current_user.id, :idea_id => params[:idea_id]);
-      if @ideavote.count == 0
-    
+      
+      
+      # back out the old vote
+      vote_changed = false
+      had_vote = false
+      
+      if @ideavote.count > 0
+        had_vote = true
+        if @ideavote[0].vote != vote
+          vote_changed = true
+        end
+        
+        if @ideavote[0].vote == "yae"
+          @idea.yae_votes-=1
+        else 
+          @idea.nae_votes-=1
+        end
+        @ideavote[0].destroy
+      end
+      
+      # apply the new vote
+      if !had_vote || vote_changed
         @newideavote = IdeaVote.new()
         @newideavote.user_id = current_user.id
         @newideavote.idea_id = @idea.id
-        @newideavote.vote = @vote
-        @newideavote.save
-            
-        if @vote == "yae"
+        @newideavote.vote = vote
+        @newideavote.save 
+        if vote == "yae"
           @idea.yae_votes+=1
         else 
           @idea.nae_votes+=1
         end
-    
-        @idea.rank = @idea.calculate_rank
-
-        respond_to do |format|
-          if @idea.save
-            format.json { render :json => @idea, :status => :created, :location => @idea }
-          else
-            format.json { render :json => @idea.errors, :status => :unprocessable_entity }
-          end
-        end
       end
+      
+      @idea.rank = @idea.calculate_rank
+      @idea.save
+      
+      respond_to do |format|
+        format.json { 
+          render :json => @idea.to_json(:methods => [:vote_tally, :category_name, :user_alias]) 
+        }
+      end
+      
     end
   end
   
@@ -50,14 +69,16 @@ class GrassrootsController < ApplicationController
       @idea.nae_votes = 0
       @idea.rank = @idea.calculate_rank
       @idea.user_id = current_user.id
+      @idea.save
+      
+      @newideavote = IdeaVote.new()
+      @newideavote.user_id = current_user.id
+      @newideavote.idea_id = @idea.id
+      @newideavote.vote = 'yae'
+      @newideavote.save
+      
       respond_to do |format|
-        if @idea.save
-          format.html { redirect_to @idea, :notice => 'Idea was successfully created.' }
-          format.json { render :json => @idea, :status => :created, :location => @idea }
-        else
-          format.html { render :action => "new" }
-          format.json { render :json => @idea.errors, :status => :unprocessable_entity }
-        end
+        format.json { render :json => @idea, :status => :created, :location => @idea }
       end
     end
   end

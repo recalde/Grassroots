@@ -1,6 +1,7 @@
 class Idea < ActiveRecord::Base
   belongs_to :category
   belongs_to :user
+  has_many :idea_vote, :dependent => :destroy
   
   def category_name
     category.name if category

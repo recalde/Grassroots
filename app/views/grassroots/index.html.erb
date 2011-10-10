@@ -74,16 +74,16 @@
 		$('.vote-yea').live('click', function() {
 			
 			var tmplItem = $(this).tmplItem();
-			vote(tmplItem.data.id, 'yae', function() {
-				tmplItem.data.vote_tally++;
+			vote(tmplItem.data.id, 'yae', function(data) {
+				tmplItem.data.vote_tally = data.vote_tally;
 				tmplItem.update();
 			});
 		});
 		
 		$('.vote-nae').live('click', function(){
 			var tmplItem = $(this).tmplItem();
-			vote(tmplItem.data.id, 'nae', function() {
-				tmplItem.data.vote_tally--;
+			vote(tmplItem.data.id, 'nae', function(data) {
+				tmplItem.data.vote_tally = data.vote_tally;
 				tmplItem.update();
 			});
 		});
