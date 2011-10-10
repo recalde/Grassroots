@@ -52,11 +52,17 @@ body {
 	font-size:12px;
 	cursor:pointer;
 }
+.vote-yea:hover {
+	text-decoration:underline;
+}
 .vote-nae {
 	text-align:center;
 	color:red;
 	font-size:12px;
 	cursor:pointer;
+}
+.vote-nae:hover {
+	text-decoration:underline;
 }
 .idea-body {
 	padding-left:4px;
