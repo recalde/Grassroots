@@ -4,7 +4,7 @@ function login_dialog(){
 	dialogDiv.attr('title', 'You are not logged in.');
 	dialogDiv.html('Please login or register to continue.');
 	dialogDiv.dialog({ 
-		width:400, 
+		width:300, 
 		height:200,
 		buttons: {
 			"Ok": function() {
