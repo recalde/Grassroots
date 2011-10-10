@@ -25,7 +25,7 @@ class GrassrootsController < ApplicationController
         if @ideavote[0].vote == "yae"
           @idea.yae_votes-=1
         else 
-          @idea.nae_votes-=1
+          @idea.nay_votes-=1
         end
         @ideavote[0].destroy
       end
@@ -40,7 +40,7 @@ class GrassrootsController < ApplicationController
         if vote == "yae"
           @idea.yae_votes+=1
         else 
-          @idea.nae_votes+=1
+          @idea.nay_votes+=1
         end
       end
       
@@ -65,7 +65,7 @@ class GrassrootsController < ApplicationController
       @idea.description = params[:new_idea_description]
       @idea.category_id = params[:new_idea_category_id]
       @idea.yae_votes = 1
-      @idea.nae_votes = 0
+      @idea.nay_votes = 0
       @idea.rank = @idea.calculate_rank
       @idea.user_id = current_user.id
       @idea.save

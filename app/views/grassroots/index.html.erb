@@ -23,7 +23,7 @@
 	<div class="idea-vote ui-corner-all">
 		<div class="vote-count">${vote_tally}</div>
 		<div class="vote-yea">Yea</div>
-		<div class="vote-nae">Nay</div>
+		<div class="vote-nay">Nay</div>
 	</div>
 	<div class="idea-body">
 		<div class="idea-subject">
@@ -37,22 +37,6 @@
 		</div>
 	</div>
 	<div class="idea-clear" />
-</div>
-</script>
-
-<script id="ideaDialogTemplate" type="text/x-jquery-tmpl">
-<div class="idea-vote ui-corner-all">
-	<div class="vote-count">${vote_tally}</div>
-	<div class="vote-yea">Yea</div>
-	<div class="vote-nae">Nay</div>
-</div>
-<div class="idea-body">
-	<div class="idea-text">
-		${description}
-	</div>
-	<div class="idea-user">
-		Posted by ${user_alias} (${created_at})
-	</div>
 </div>
 </script>
 
@@ -95,9 +79,9 @@
 			});
 		});
 		
-		$('.vote-nae').live('click', function(){
+		$('.vote-nay').live('click', function(){
 			var tmplItem = $(this).tmplItem();
-			vote(tmplItem.data.id, 'nae', function(data) {
+			vote(tmplItem.data.id, 'nay', function(data) {
 				tmplItem.data.vote_tally = data.vote_tally;
 				tmplItem.update();
 			});
@@ -107,7 +91,7 @@
 		
 		<% else %>
 		$('.vote-yea').live('click', login_dialog);
-		$('.vote-nae').live('click', login_dialog);
+		$('.vote-nay').live('click', login_dialog);
 		$('.new-idea').live('click', login_dialog);
 		<% end %>
 

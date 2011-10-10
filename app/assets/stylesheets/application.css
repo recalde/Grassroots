@@ -55,13 +55,13 @@ body {
 .vote-yea:hover {
 	text-decoration:underline;
 }
-.vote-nae {
+.vote-nay {
 	text-align:center;
 	color:red;
 	font-size:12px;
 	cursor:pointer;
 }
-.vote-nae:hover {
+.vote-nay:hover {
 	text-decoration:underline;
 }
 .idea-body {

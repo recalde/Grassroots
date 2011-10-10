@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111007210421) do
+ActiveRecord::Schema.define(:version => 20111010203546) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(:version => 20111007210421) do
     t.datetime "updated_at"
     t.integer  "category_id"
     t.integer  "yae_votes"
-    t.integer  "nae_votes"
+    t.integer  "nay_votes"
     t.float    "rank"
     t.integer  "user_id"
   end

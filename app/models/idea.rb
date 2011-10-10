@@ -12,11 +12,11 @@ class Idea < ActiveRecord::Base
   end
   
   def vote_tally
-    yae_votes - nae_votes
+    yae_votes - nay_votes
   end
   
   def total_votes
-    yae_votes + nae_votes
+    yae_votes + nay_votes
   end
   
   def calculate_rank
@@ -42,7 +42,7 @@ class Idea < ActiveRecord::Base
   end
 
   def score
-    2 * yae_votes - nae_votes
+    2 * yae_votes - nay_votes
   end
 
   def hot

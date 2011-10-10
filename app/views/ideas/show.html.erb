@@ -3,7 +3,7 @@
 	<div class="idea-vote ui-corner-all">
 		<div class="vote-count"><%= @idea.vote_tally %></div>
 		<div class="vote-yea">Yea</div>
-		<div class="vote-nae">Nay</div>
+		<div class="vote-nay">Nay</div>
 	</div>
 	
 	<div class="idea-body">
@@ -50,8 +50,8 @@
 			});
 		});
 		
-		$('.vote-nae').live('click', function(){
-			vote(<%= @idea.id %>, 'nae', function(data) {
+		$('.vote-nay').live('click', function(){
+			vote(<%= @idea.id %>, 'nay', function(data) {
 				location.reload(true)
 				//$('.vote-count').html(data.vote_tally);
 			});
@@ -60,7 +60,7 @@
 		<% else %>
 		
 		$('.vote-yea').live('click', login_dialog);
-		$('.vote-nae').live('click', login_dialog);
+		$('.vote-nay').live('click', login_dialog);
 		
 		<% end %>
 	});
