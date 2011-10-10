@@ -11,7 +11,7 @@ class IdeasController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { 
-        render :json => @ideas.to_json(:methods => [:vote_tally, :category_name, :user_alias]) 
+        render :json => @ideas.to_json(:methods => [:vote_tally, :category_name, :user_alias, :seo_url]) 
       }
     end
   end

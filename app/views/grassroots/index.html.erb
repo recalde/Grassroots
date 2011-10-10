@@ -23,7 +23,7 @@
 	</div>
 	<div class="idea-body">
 		<div class="idea-subject">
-			<a href="/ideas/${id}">${subject}</a>
+			<a href="/ideas/${seo_url}">${subject}</a>
 		</div>
 		<div class="idea-text">
 			${description}
@@ -89,6 +89,7 @@
 		});
 
 		$('.new-idea').live('click', new_idea);
+		
 		<% else %>
 		$('.vote-yea').live('click', login_dialog);
 		$('.vote-nae').live('click', login_dialog);
@@ -98,8 +99,5 @@
 		renderTopics();
 		
 	});
-	
-	
-
 	
 </script>

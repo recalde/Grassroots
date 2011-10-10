@@ -23,7 +23,9 @@ class Idea < ActiveRecord::Base
     hot
   end
   
-  
+  def seo_url
+    "#{id}/#{subject.parameterize}"
+  end
   
 
   def epoch_seconds

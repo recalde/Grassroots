@@ -7,6 +7,8 @@ Grassroots::Application.routes.draw do
   match 'vote' => 'grassroots#vote'
   match 'new_idea' => 'grassroots#new_idea'
   root :to => 'grassroots#index'
+  match 'ideas/:id/:name' => 'ideas#show'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
