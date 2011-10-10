@@ -33,7 +33,7 @@
 			${description}
 		</div>
 		<div class="idea-user">
-			Posted by ${user_alias} (${prettyDate($data.created_at)})
+			Posted by ${user_alias} to ${category_name} (${prettyDate($data.created_at)})
 		</div>
 	</div>
 	<div class="idea-clear" />
@@ -66,7 +66,18 @@
 		Description:<br/>
 		<input id="new_idea_description" type="text" /> 
 	</div>
-	<input id="new_idea_category_id" type="hidden" value="${category_id}" />
+	{{if category_id}}
+		<input id="new_idea_category_id" type="hidden" value="${category_id}" />
+	{{else}}
+		<div class="dialog-input">
+		Category:<br/>
+		<select id="new_idea_category_id" class="ui-widget ui-corner-all">
+		{{each categories}}
+			<option value="${id}">${name}</option>
+		{{/each}}
+		</select>
+		</div>
+	{{/if}}
 </div>
 </script>
 
@@ -100,7 +111,7 @@
 		$('.new-idea').live('click', login_dialog);
 		<% end %>
 
-		renderTopics();
+		renderCategories();
 		
 	});
 	

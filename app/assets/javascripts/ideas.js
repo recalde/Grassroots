@@ -1,4 +1,8 @@
 
+$category_data = [];
+$current_category_filter = {};
+$current_category_div = {};
+
 function login_dialog(){
 	var dialogDiv = $('<div></div>');
 	dialogDiv.attr('title', 'You are not logged in.');
@@ -14,11 +18,12 @@ function login_dialog(){
 	});
 }
 
-function renderTopics() {
+function renderCategories() {
 	$.ajax({
 		url: '/categories',
 		dataType: 'json',
 		success: function(data) {
+			$category_data = data;
 			var topics = { topics: data };
 			var renderTopics = $('#topicsTemplate').tmpl(topics);
 			$('#grass-body').empty();
@@ -29,22 +34,24 @@ function renderTopics() {
 				var category_id = $(ui.panel).attr('category_id');
 				var category_type = $(ui.panel).attr('category_type');
 				
-				var category_filter = { };
-				var category_div;
+				$current_category_filter = { };
+				$current_category_div = { };
+				
 				if (category_id) {
-					category_filter.category_id = category_id;
-					category_div = $('#category-' + category_id);
+					$current_category_filter.category_id = category_id;
+					$current_category_div = $('#category-' + category_id);
 				}
 				else if (category_type) {
-					category_filter.category_type = category_type;
-					category_div = $('#category-' + category_type);
+					$current_category_filter.category_type = category_type;
+					$current_category_div = $('#category-' + category_type);
 				}
 
-				renderIdeas(category_filter, category_div);	
+				renderIdeas($current_category_filter, $current_category_div);	
 			});
 
-
-			renderIdeas({ category_type: 'top' }, $('#category-top'));	
+			$current_category_filter = { category_type: 'top' };
+			$current_category_div = $('#category-top');
+			renderIdeas($current_category_filter, $current_category_div);	
 			
 		}
 	});
@@ -63,15 +70,25 @@ function renderIdeas(filter, category_div) {
 			
 			var new_button = $('<button class="new-idea ui-button">New Idea</button>');
 			new_button.button();
+			
+			if (filter.category_id != null)
+				new_button.attr('category_id', filter.category_id);
+				
 			new_button.appendTo(category_div);
-			new_button.attr('category_id', category_id);
+			
 		}
 	});
 }
 
 function new_idea() {
 	var category = $(this).attr('category_id');
-	var data = { category_id: category };
+	
+	var data = { };
+
+	if (category != undefined)
+		data.category_id = category;
+	else
+		data.categories = $category_data;
 
 	var newIdeaDiv = $('<div></div>');
 	newIdeaDiv.attr('title', 'New Idea');
@@ -80,10 +97,10 @@ function new_idea() {
 	renderDialog.appendTo(newIdeaDiv);
 	newIdeaDiv.dialog({
 		width:600,
-		height:250,
+		height:300,
 		buttons: {
 			"Create": function() {
-				var data = { 
+				var new_idea_data = { 
 					new_idea_subject: $('#new_idea_subject').val(), 
 					new_idea_description: $('#new_idea_description').val(), 
 					new_idea_category_id: $('#new_idea_category_id').val()
@@ -95,9 +112,9 @@ function new_idea() {
 				$.ajax({
 					url: '/new_idea',
 					dataType: 'json',
-					data: data,
+					data: new_idea_data,
 					success: function() {
-						renderIdeas(category);
+						renderIdeas($current_category_filter, $current_category_div);
 					}
 				});
 			},

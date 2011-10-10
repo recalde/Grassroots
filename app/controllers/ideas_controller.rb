@@ -3,16 +3,17 @@ class IdeasController < ApplicationController
   # GET /ideas.json
   def index
     
+    limit = 15
     if params[:category_id]
-      @ideas = Idea.where(:category_id => params[:category_id]).order("rank DESC")
+      @ideas = Idea.where(:category_id => params[:category_id]).order("rank DESC").limit(limit)
     elsif params[:category_type]
       if params[:category_type] == "top"
-        @ideas = Idea.order("rank DESC")
+        @ideas = Idea.order("rank DESC").limit(limit)
       elsif params[:category_type] == "new"
-        @ideas = Idea.order("created_at DESC")
+        @ideas = Idea.order("created_at DESC").limit(limit)
       end
     else 
-      @ideas = Idea.order("rank DESC")
+      @ideas = Idea.order("rank DESC").limit(limit)
     end
 
     respond_to do |format|
