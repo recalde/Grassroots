@@ -18,7 +18,40 @@
 		</div>
 	</div>
 	<div class="idea-clear" />
+	
+</div>
+<div class="idea ui-corner-all">
+	<% @votes.each do |vote| %>
+		<%= vote.user_id %>, 
+	<% end %>
 </div>
 
 <%= link_to 'Edit', edit_idea_path(@idea) %>
 <%= link_to 'Back', ideas_path %>
+
+<script>
+	
+	$(function () { 
+
+		<% if user_signed_in? %>
+		
+		$('.vote-yea').live('click', function() {
+			vote(<%= @idea.id %>, 'yae', function(data) {
+				$('.vote-count').html(data.vote_tally);
+			});
+		});
+		
+		$('.vote-nae').live('click', function(){
+			vote(<%= @idea.id %>, 'nae', function(data) {
+				$('.vote-count').html(data.vote_tally);
+			});
+		});
+		
+		<% else %>
+		
+		$('.vote-yea').live('click', login_dialog);
+		$('.vote-nae').live('click', login_dialog);
+		
+		<% end %>
+	});
+</script>

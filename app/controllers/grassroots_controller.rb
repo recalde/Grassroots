@@ -12,7 +12,6 @@ class GrassrootsController < ApplicationController
       vote = params[:vote]
       @ideavote = IdeaVote.where(:user_id => current_user.id, :idea_id => params[:idea_id]);
       
-      
       # back out the old vote
       vote_changed = false
       had_vote = false
