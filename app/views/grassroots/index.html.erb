@@ -9,7 +9,7 @@
     {{/each}}
 	</ul>
 	{{each topics}}
-	    <div id="category-${id}" category_id="${id}"></div>
+	    <div id="category-${id}" class="topic" category_id="${id}"></div>
 	{{/each}}
 </div>
 </script>
@@ -32,6 +32,7 @@
 			Posted by ${user_alias} (${created_at})
 		</div>
 	</div>
+	<div class="idea-clear" />
 </div>
 </script>
 
@@ -135,20 +136,6 @@
 		$('.vote-nae').live('click', login_dialog);
 		$('.new-idea').live('click', login_dialog);
 		<% end %>
-
-/*
-		$('.idea-subject').live('click', function() {
-			var idea = $(this).tmplItem().data;
-			var dialogDiv = $('<div></div>');
-			dialogDiv.attr('title', idea.subject);
-			var renderDialog = $('#ideaDialogTemplate').tmpl(idea);
-			renderDialog.appendTo(dialogDiv);
-			dialogDiv.dialog({ 
-				width:600, 
-				height:250
-			});
-		});
-*/
 
 		renderTopics();
 		

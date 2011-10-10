@@ -33,10 +33,10 @@
 </head>
 <body>
 	<div id="grass-header" class="ui-corner-all">  
-		<div id="grass-header-text">
+		<span id="grass-header-text">
 			Grassroots Policy
-		</div>
-		<div id="grass-header-menu">
+		</span>
+		<span id="grass-header-menu">
 			<% if user_signed_in? %>
 				<a href="/ideas/">My Ideas</a>&nbsp;|&nbsp;
 				<a href="/categories/">My Issues</a>&nbsp;|&nbsp;
@@ -46,8 +46,7 @@
 				<%= link_to('Login', new_user_session_path)  %>&nbsp;|&nbsp; 
  				<%= link_to('Register', new_user_registration_path)  %>
 			<% end %>
-			
-		</div>
+		</span>
 	</div>
 	
 	<%= yield %>
