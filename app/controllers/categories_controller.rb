@@ -56,15 +56,18 @@ class CategoriesController < ApplicationController
   # PUT /categories/1
   # PUT /categories/1.json
   def update
-    @category = Category.find(params[:id])
+    if current_user.alias == "Rob"
+      
+      @category = Category.find(params[:id])
 
-    respond_to do |format|
-      if @category.update_attributes(params[:category])
-        format.html { redirect_to @category, :notice => 'Category was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.json { render :json => @category.errors, :status => :unprocessable_entity }
+      respond_to do |format|
+        if @category.update_attributes(params[:category])
+          format.html { redirect_to @category, :notice => 'Category was successfully updated.' }
+          format.json { head :ok }
+        else
+          format.html { render :action => "edit" }
+          format.json { render :json => @category.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -72,12 +75,16 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
+    if current_user.alias == "Rob"
+  
     @category = Category.find(params[:id])
-    @category.destroy
+      @category.destroy
 
-    respond_to do |format|
-      format.html { redirect_to categories_url }
-      format.json { head :ok }
+      respond_to do |format|
+        format.html { redirect_to categories_url }
+        format.json { head :ok }
+      end
     end
+    
   end
 end
