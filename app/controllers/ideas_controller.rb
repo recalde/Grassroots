@@ -2,8 +2,15 @@ class IdeasController < ApplicationController
   # GET /ideas
   # GET /ideas.json
   def index
+    
     if params[:category_id]
       @ideas = Idea.where(:category_id => params[:category_id]).order("rank DESC")
+    elsif params[:category_type]
+      if params[:category_type] == "top"
+        @ideas = Idea.order("rank DESC")
+      elsif params[:category_type] == "new"
+        @ideas = Idea.order("created_at DESC")
+      end
     else 
       @ideas = Idea.order("rank DESC")
     end

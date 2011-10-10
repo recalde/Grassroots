@@ -4,10 +4,14 @@
 <script id="topicsTemplate" type="text/x-jquery-tmpl">
 <div id="tabs">
 	<ul>
+	<li><a href="#category-top">Top Ideas</a></li>
+	<li><a href="#category-new">New Ideas</a></li>
     {{each topics}}
         <li><a href="#category-${id}">${name}</a></li>
     {{/each}}
 	</ul>
+	<div id="category-top" class="topic" category_type="top"></div>
+	<div id="category-new" class="topic" category_type="new"></div>
 	{{each topics}}
 	    <div id="category-${id}" class="topic" category_id="${id}"></div>
 	{{/each}}

@@ -27,25 +27,37 @@ function renderTopics() {
 			
 			$('#tabs').bind( "tabsselect", function(event, ui) {
 				var category_id = $(ui.panel).attr('category_id');
-				renderIdeas(category_id);	
+				var category_type = $(ui.panel).attr('category_type');
+				
+				var category_filter = { };
+				var category_div;
+				if (category_id) {
+					category_filter.category_id = category_id;
+					category_div = $('#category-' + category_id);
+				}
+				else if (category_type) {
+					category_filter.category_type = category_type;
+					category_div = $('#category-' + category_type);
+				}
+
+				renderIdeas(category_filter, category_div);	
 			});
-			
-			var category_id = data[0].id;
-			renderIdeas(category_id);	
+
+
+			renderIdeas({ category_type: 'top' }, $('#category-top'));	
 			
 		}
 	});
 }
 
-function renderIdeas(category_id) {
-	var category_filter = { category_id: category_id };
+function renderIdeas(filter, category_div) {
+
 	$.ajax({
 		url: '/ideas',
 		dataType: 'json',
-		data: category_filter,
+		data: filter,
 		success: function(data) {
 			var render = $('#ideaTemplate').tmpl(data);
-			var category_div = $('#category-' + category_id);
 			category_div.empty();
 			render.appendTo(category_div);
 			
