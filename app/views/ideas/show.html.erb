@@ -39,8 +39,11 @@
 			</div>
 		</div>
 		
+		<a id="back_button" href="/">Back</a>
+		<% if current_user.alias == "Rob" %>
 		<%= link_to 'Edit', edit_idea_path(@idea) %>
 		<%= link_to 'Back', ideas_path %>
+		<% end %>
 	</div>
 </div>
 </div>
@@ -48,7 +51,7 @@
 <script>
 	
 	$(function () { 
-
+		$('#back_button').button();
 		$('#tabs').tabs();
 		<% if user_signed_in? %>
 		
