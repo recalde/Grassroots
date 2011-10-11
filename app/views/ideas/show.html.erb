@@ -40,10 +40,14 @@
 		</div>
 		
 		<a id="back_button" href="/">Back</a>
+		
+		<% if user_signed_in? %>
 		<% if current_user.alias == "Rob" %>
 		<%= link_to 'Edit', edit_idea_path(@idea) %>
 		<%= link_to 'Back', ideas_path %>
 		<% end %>
+		<% end %>
+		
 	</div>
 </div>
 </div>
