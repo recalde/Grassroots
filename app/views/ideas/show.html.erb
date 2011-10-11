@@ -1,46 +1,53 @@
-<div class="idea ui-corner-all">
-
-	<div class="idea-vote ui-corner-all">
-		<div class="vote-count"><%= @idea.vote_tally %></div>
-		<div class="vote-yea">Yea</div>
-		<div class="vote-nay">Nay</div>
+<div id="grass-body">
+<div id="tabs">
+	<ul>
+	<li><a href="#category-<%= @idea.category_id %>"><%= @idea.category_name %></a></li>
+	</ul>
+	<div id="category-<%= @idea.category_id %>" class="topic">
+		<div class="idea ui-corner-all">
+			<div class="idea-vote ui-corner-all">
+				<div class="vote-count"><%= @idea.vote_tally %></div>
+				<div class="vote-yea">Yea</div>
+				<div class="vote-nay">Nay</div>
+			</div>
+			<div class="idea-body">
+				<div class="idea-subject">
+					<%= @idea.subject %>
+				</div>
+				<div class="idea-text">
+					<%= @idea.description %>
+				</div>
+				<div class="idea-user">
+					Posted by <%= @idea.user_alias %> (<%= @idea.created_at %>)
+				</div>
+			</div>
+			<div class="idea-clear"></div>
+		</div>
+		
+		<div class="idea ui-corner-all">
+			<div class="idea-body">
+				<div class="idea-subject">
+					Votes:
+				</div>
+				<div class="idea-text">
+				<% @votes.each do |vote| %>
+					<%= vote.user_alias %> 
+				<% end %>
+				</div>
+			</div>
+		</div>
+		
+		<%= link_to 'Edit', edit_idea_path(@idea) %>
+		<%= link_to 'Back', ideas_path %>
 	</div>
-	
-	<div class="idea-body">
-		<div class="idea-subject">
-			<%= @idea.subject %>
-		</div>
-		<div class="idea-text">
-			<%= @idea.description %>
-		</div>
-		<div class="idea-user">
-			Posted by <%= @idea.user_alias %> (<%= @idea.created_at %>)
-		</div>
-	</div>
-	<div class="idea-clear" />
-	
 </div>
-<div class="idea ui-corner-all">
-
-	<div class="idea-body">
-		<div class="idea-subject">
-			Votes:
-		</div>
-		<div class="idea-text">
-		<% @votes.each do |vote| %>
-			<%= vote.user_alias %> 
-		<% end %>
-		</div>
-	</div>
 </div>
-
-<%= link_to 'Edit', edit_idea_path(@idea) %>
-<%= link_to 'Back', ideas_path %>
 
 <script>
 	
 	$(function () { 
 
+		$('#tabs').tabs();
 		<% if user_signed_in? %>
 		
 		$('.vote-yea').live('click', function() {

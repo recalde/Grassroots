@@ -31,7 +31,7 @@ class IdeasController < ApplicationController
     @votes = IdeaVote.where(:idea_id => params[:id]);
     
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render :layout => 'header_only' } # show.html.erb 
       format.json { render :json => @idea }
     end
   end
