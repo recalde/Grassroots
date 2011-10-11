@@ -64,6 +64,12 @@ body {
 .vote-nay:hover {
 	text-decoration:underline;
 }
+.user-yae {
+	color:green;
+}
+.user-nay {
+	color:red;
+}
 .idea-body {
 	padding-left:4px;
 	color:black;

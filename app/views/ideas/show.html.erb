@@ -31,7 +31,9 @@
 				</div>
 				<div class="idea-text">
 				<% @votes.each do |vote| %>
-					<%= vote.user_alias %> 
+					<span class="user-<%= vote.vote %>">
+						<%= vote.user_alias %>
+					</span> 
 				<% end %>
 				</div>
 			</div>
