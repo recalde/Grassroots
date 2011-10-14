@@ -46,25 +46,28 @@
 			</div>
 		</div>
 		
-		<a id="root_comment" href="#">Comment</a>&nbsp;
-		<a id="back_button" href="/">Back</a>
-		
 		<% if user_signed_in? %>
 		<% if current_user.alias == "Rob" %>
-		<%= link_to 'Edit', edit_idea_path(@idea) %>
+		<%= link_to 'Edit', edit_idea_path(@idea) %><br/>
 		<% end %>
 		<% end %>
 		
-		<ul id='sortable'>
-		  <% for comment in @comments %>
-		    <li>
-				<span idea_id="<%= comment.idea_id %>" comment_id="<%= comment.id %>" class="idea-comment">
-					<%= comment.comment %> <i>-<%= comment.user_alias %></i>
-				</span>
+		<br />
+		
+		<% @comments.each do |comment| %>
+			<div class="comment" idea_id="<%= comment.idea_id %>" comment_id="<%= comment.id %>">
+				<div class="comment-user">
+					Posted by <%= comment.user_alias %> (<%= comment.created_at %>)
+				</div>
+				<div class="comment-body">
+					<%= comment.comment %>
+				</div>
 				<%= render 'comment', :item => comment unless comment.leaf? %>
-		    </li>
-		  <% end %>
-		</ul>
+			</div>
+		<% end %>
+		
+		<a id="root_comment" href="#">Comment</a>&nbsp;
+		<a id="back_button" href="/">Back</a>
 		
 	</div>
 </div>
@@ -95,11 +98,11 @@
 			});
 		});
 		
-		$('.idea-comment').live('click', function() {
+		$('.comment-body').live('click', function() {
 
-			var comment = $(this);
-			var comment_id = $(this).attr('comment_id');
-			var idea_id = $(this).attr('idea_id');
+			var comment = $(this).parent();
+			var comment_id = comment.attr('comment_id');
+			var idea_id = comment.attr('idea_id');
 			var comment_text = $(this).html();
 			new_comment(idea_id, comment_id, comment_text);
 			

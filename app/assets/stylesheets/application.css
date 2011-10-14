@@ -93,9 +93,24 @@ body {
 	color:black;
 }
 
-.idea-comment {
-	cursor:pointer;
+.comment-children {
+	margin-left: 15px;
+	margin-bottom: 15px;
 }
-.idea-comment:hover {
+.comment {
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #c0c0c0;
+	padding: 0px 4px 0px 4px;
+}
+.comment-user {
+	font-size: 11px;
+}
+.comment-body {
+	font-size: 13px;
+	cursor:pointer;
+	margin-bottom: 8px;
+}
+.comment-body:hover {
 	text-decoration:underline;
 }

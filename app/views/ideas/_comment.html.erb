@@ -1,12 +1,13 @@
-<ul>
+<div class="comment-children">
 	<% item.children.each do |comment| %>
-
-	  <li>
-			<span idea_id="<%= comment.idea_id %>" comment_id="<%= comment.id %>" class="idea-comment">
-				<%= comment.comment %> <i>-<%= comment.user_alias %></i>
-			</span>
+		<div class="comment" idea_id="<%= comment.idea_id %>" comment_id="<%= comment.id %>">
+			<div class="comment-user">
+				Posted by <%= comment.user_alias %> (<%= comment.created_at %>)
+			</div>
+			<div class="comment-body">
+				<%= comment.comment %>
+			</div>
 			<%= render 'comment', :item => comment unless comment.leaf? %>
-		</li>
-
-	<% end -%>
-</ul>
+		</div>
+	<% end %>
+</div>
