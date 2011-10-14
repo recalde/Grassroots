@@ -25,10 +25,9 @@ body {
 	background-color:white;
 }
 .tabs-scroller {
-	height: 41px;
+	height: 46px;
 	width: 100%;
-	overflow: auto;
-	overflow-y: hidden;
+	overflow: hidden;
 }
 .topic {
 }
