@@ -36,6 +36,7 @@
 <% end %>
 </table>
 
+<% if current_user.alias == "Rob" %>
 <br />
-
 <%= link_to 'New Idea', new_idea_path %>
+<% end %>

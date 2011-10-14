@@ -6,6 +6,7 @@ Grassroots::Application.routes.draw do
 
   match 'vote' => 'grassroots#vote'
   match 'new_idea' => 'grassroots#new_idea'
+  match 'new_comment' => 'grassroots#new_comment'
   root :to => 'grassroots#index'
   match 'ideas/:id/:name' => 'ideas#show'
   

@@ -126,6 +126,60 @@ function new_idea() {
 	});
 }
 
+function new_comment(idea_id, comment_id, comment_text) {
+	
+	var dialogDiv = $('<div></div>');
+	dialogDiv.attr('title', 'New Comment');
+	
+	if (comment_text) {
+		dialogDiv.append('Response To:<br/>');
+		dialogDiv.append(comment_text);
+		dialogDiv.append('<br/><br/>');
+	}
+	
+	dialogDiv.append('Comment Text:<br/>');
+	var comment_text = $('<textarea id="new_comment" cols="50" rows="5"></textarea>');
+	comment_text.appendTo(dialogDiv);
+	dialogDiv.append('<br/>');
+	
+	var buttons = {
+		"Create": function() {
+			var new_comment_data = { 
+				idea_id: idea_id, 
+				comment: comment_text.val()
+			};
+			
+			if (comment_id) {
+				new_comment_data.parent_id = comment_id;
+			}
+			
+			$(this).dialog("close");
+			$(this).remove();
+			
+			$.ajax({
+				url: '/new_comment',
+				dataType: 'json',
+				data: new_comment_data,
+				success: function() {
+					location.reload(true);
+				},
+				
+			});
+		},
+		Cancel: function() {
+			$(this).dialog( "close" );
+			$(this).remove();
+		}
+	};
+	
+	dialogDiv.dialog({ 
+		width:550, 
+		height:400,
+		buttons: buttons,
+	});
+	
+}
+
 function vote(vote_id, vote, success) {
 	var voteData = { idea_id: vote_id, vote: vote };
 	

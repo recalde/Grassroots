@@ -28,7 +28,14 @@ class IdeasController < ApplicationController
   # GET /ideas/1.json
   def show
     @idea = Idea.find(params[:id])
+    
+    #@comment = Comment.create!(:comment => 'test')
+    #@comment.idea = @idea
+    #@comment.save
+    
     @votes = IdeaVote.where(:idea_id => params[:id]);
+    
+    @comments = Comment.where(:idea_id => params[:id]).roots;
     
     respond_to do |format|
       format.html { render :layout => 'header_only' } # show.html.erb 

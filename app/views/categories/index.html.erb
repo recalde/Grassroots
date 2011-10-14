@@ -22,6 +22,7 @@
 <% end %>
 </table>
 
+<% if current_user.alias == "Rob" %>
 <br />
-
 <%= link_to 'New Category', new_category_path %>
+<% end %>

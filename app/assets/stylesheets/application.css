@@ -92,3 +92,10 @@ body {
 	font-size:18px;
 	color:black;
 }
+
+.idea-comment {
+	cursor:pointer;
+}
+.idea-comment:hover {
+	text-decoration:underline;
+}

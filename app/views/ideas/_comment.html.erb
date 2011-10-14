@@ -1,0 +1,12 @@
+<ul>
+	<% item.children.each do |comment| %>
+
+	  <li>
+			<span idea_id="<%= comment.idea_id %>" comment_id="<%= comment.id %>" class="idea-comment">
+				<%= comment.comment %> <i>-<%= comment.user_alias %></i>
+			</span>
+			<%= render 'comment', :item => comment unless comment.leaf? %>
+		</li>
+
+	<% end -%>
+</ul>

@@ -46,14 +46,25 @@
 			</div>
 		</div>
 		
+		<a id="root_comment" href="#">Comment</a>&nbsp;
 		<a id="back_button" href="/">Back</a>
 		
 		<% if user_signed_in? %>
 		<% if current_user.alias == "Rob" %>
 		<%= link_to 'Edit', edit_idea_path(@idea) %>
-		<%= link_to 'Back', ideas_path %>
 		<% end %>
 		<% end %>
+		
+		<ul id='sortable'>
+		  <% for comment in @comments %>
+		    <li>
+				<span idea_id="<%= comment.idea_id %>" comment_id="<%= comment.id %>" class="idea-comment">
+					<%= comment.comment %> <i>-<%= comment.user_alias %></i>
+				</span>
+				<%= render 'comment', :item => comment unless comment.leaf? %>
+		    </li>
+		  <% end %>
+		</ul>
 		
 	</div>
 </div>
@@ -63,7 +74,11 @@
 	
 	$(function () { 
 		$('#back_button').button();
+		$('#root_comment').button();
+
+		
 		$('#tabs').tabs();
+			
 		<% if user_signed_in? %>
 		
 		$('.vote-yea').live('click', function() {
@@ -75,15 +90,32 @@
 		
 		$('.vote-nay').live('click', function(){
 			vote(<%= @idea.id %>, 'nay', function(data) {
-				location.reload(true)
+				location.reload(true);
 				//$('.vote-count').html(data.vote_tally);
 			});
+		});
+		
+		$('.idea-comment').live('click', function() {
+
+			var comment = $(this);
+			var comment_id = $(this).attr('comment_id');
+			var idea_id = $(this).attr('idea_id');
+			var comment_text = $(this).html();
+			new_comment(idea_id, comment_id, comment_text);
+			
+		});
+		
+		$('#root_comment').click(function() {
+			new_comment(<%= @idea.id %>, null, null);
+			return false;
 		});
 		
 		<% else %>
 		
 		$('.vote-yea').live('click', login_dialog);
 		$('.vote-nay').live('click', login_dialog);
+		$('.idea-comment').live('click', login_dialog);
+		$('#root_comment').live('click', login_dialog);
 		
 		<% end %>
 	});

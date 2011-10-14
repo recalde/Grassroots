@@ -70,11 +70,11 @@ class GrassrootsController < ApplicationController
       @idea.user_id = current_user.id
       @idea.save
       
-      @newideavote = IdeaVote.new()
-      @newideavote.user_id = current_user.id
-      @newideavote.idea_id = @idea.id
-      @newideavote.vote = 'yae'
-      @newideavote.save
+      @vote = IdeaVote.new()
+      @vote.user_id = current_user.id
+      @vote.idea_id = @idea.id
+      @vote.vote = 'yae'
+      @vote.save
       
       respond_to do |format|
         format.json { render :json => @idea, :status => :created, :location => @idea }
@@ -82,4 +82,22 @@ class GrassrootsController < ApplicationController
     end
   end
 
+  # GET /new-comment
+  # GET /new-comment.json
+  def new_comment
+    if user_signed_in?
+      @comment = Comment.create!(:comment => params[:comment])
+      @comment.idea_id = params[:idea_id]
+      if params[:parent_id] && params[:parent_id] != 0
+        @comment.parent_id = params[:parent_id]
+      end
+      @comment.user_id = current_user.id
+      @comment.save
+      
+      respond_to do |format|
+        format.json { render :json => @comment, :status => :created }
+      end
+    end
+  end
+  
 end

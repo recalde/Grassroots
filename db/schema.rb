@@ -10,13 +10,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111010205544) do
+ActiveRecord::Schema.define(:version => 20111014172216) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "comments", :force => true do |t|
+    t.string   "comment"
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.integer  "depth"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "idea_id"
+    t.integer  "user_id"
   end
 
   create_table "idea_votes", :force => true do |t|
