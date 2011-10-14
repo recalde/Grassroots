@@ -34,8 +34,10 @@
 		</span>
 		<span id="grass-header-menu">
 			<% if user_signed_in? %>
+			<!--
 				<a href="/ideas/">My Ideas</a>&nbsp;|&nbsp;
 				<a href="/categories/">My Issues</a>&nbsp;|&nbsp;
+			-->
 				<%= link_to('Edit registration', edit_user_registration_path) %>&nbsp;|&nbsp;
 				<%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
 			<% else %>
