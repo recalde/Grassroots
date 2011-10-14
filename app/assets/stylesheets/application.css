@@ -24,6 +24,12 @@ body {
 	padding: 4px;
 	background-color:white;
 }
+.tabs-scroller {
+	height: 41px;
+	width: 100%;
+	overflow: auto;
+	overflow-y: hidden;
+}
 .topic {
 }
 .idea {
