@@ -11,25 +11,9 @@
 	<li><a href="#category-<%= @idea.category_id %>"><%= @idea.category_name %></a></li>
 	</ul>
 	<div id="category-<%= @idea.category_id %>" class="topic">
-		<div class="idea ui-corner-all">
-			<div class="idea-vote ui-corner-all">
-				<div class="vote-yea">Yea</div>
-				<div class="vote-count"><%= @idea.vote_tally %></div>
-				<div class="vote-nay">Nay</div>
-			</div>
-			<div class="idea-body">
-				<div class="idea-subject">
-					<%= @idea.subject %>
-				</div>
-				<div class="idea-text">
-					<%= @idea.description %>
-				</div>
-				<div class="idea-user">
-					Posted by <%= @idea.user_alias %> (<%= @idea.created_at %>)
-				</div>
-			</div>
-			<div class="idea-clear"></div>
-		</div>
+		
+		
+		<%= render 'shared/idea', :idea => @idea %>
 		
 		<div class="idea ui-corner-all">
 			<div class="idea-body">
@@ -54,17 +38,7 @@
 		
 		<br />
 		
-		<% @comments.each do |comment| %>
-			<div class="comment" idea_id="<%= comment.idea_id %>" comment_id="<%= comment.id %>">
-				<div class="comment-user">
-					Posted by <%= comment.user_alias %> (<%= comment.created_at %>)
-				</div>
-				<div class="comment-body">
-					<%= comment.comment %>
-				</div>
-				<%= render 'comment', :item => comment unless comment.leaf? %>
-			</div>
-		<% end %>
+		<%= render 'shared/comments', :comments => @comments unless @comments.empty? %>
 		
 		<a id="root_comment" href="#">Comment</a>&nbsp;
 		<a id="back_button" href="/">Back</a>
@@ -98,14 +72,12 @@
 			});
 		});
 		
-		$('.comment-body').live('click', function() {
-
+		$('.reply-link').live('click', function() {
 			var comment = $(this).parent();
 			var comment_id = comment.attr('comment_id');
 			var idea_id = comment.attr('idea_id');
 			var comment_text = $(this).html();
 			new_comment(idea_id, comment_id, comment_text);
-			
 		});
 		
 		$('#root_comment').click(function() {
@@ -119,6 +91,7 @@
 		$('.vote-nay').live('click', login_dialog);
 		$('.idea-comment').live('click', login_dialog);
 		$('#root_comment').live('click', login_dialog);
+		$('.reply-link').live('click', login_dialog);
 		
 		<% end %>
 	});

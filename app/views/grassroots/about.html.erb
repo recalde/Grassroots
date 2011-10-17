@@ -1,0 +1,24 @@
+<div id="grass-body">
+<div id="tabs">
+	<ul>
+	<li><a href="#about">About</a></li>
+	</ul>
+	<div id="about">
+
+		<p>GrassrootsPolicy.com is a website where users can post, vote, and comment on political ideas. If you feel passionate about an idea you can share the link with your friends, and encourage them to provide feedback and vote on the issue.  Top ideas might get the attention of elected officials who can do something about it.
+		</p>
+
+		<%= link_to "Back", :back, :id => "back_link"%>
+		
+	</div>
+</div>
+</div>
+
+<script>
+	
+	$(function () { 
+		$('#back_link').button();
+		$('#tabs').tabs();
+	});
+	
+</script>

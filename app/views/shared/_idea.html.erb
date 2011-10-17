@@ -1,0 +1,27 @@
+<!-- Idea: <%= idea.id %> -->
+<div class="idea ui-corner-all">
+	<div class="idea-vote ui-corner-all">
+		<div class="vote-yea">Yea</div>
+		<div class="vote-count"><%= idea.vote_tally %></div>
+		<div class="vote-nay">Nay</div>
+	</div>
+	<div class="idea-body">
+		<div class="idea-subject">
+			<%= link_to idea.subject, idea %>
+		</div>
+		<div class="idea-text">
+			<%= idea.description %>
+		</div>
+		<div class="idea-user">
+			Posted by <%= idea.user_alias %> to <%= idea.category_name %> (<%= time_ago_in_words(idea.created_at) %> ago)
+		</div>
+		
+		<% if user_signed_in? && current_user.alias == "Rob" %>
+		<div class="idea-text">
+		    <%= link_to 'Edit', edit_idea_path(idea) %>&nbsp;
+		    <%= link_to 'Destroy', idea, :confirm => 'Are you sure?', :method => :delete %>
+		</div>
+		<% end %>
+	</div>
+	<div class="idea-clear"></div>
+</div>

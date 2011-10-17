@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Grassroots Policy</title>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-  <link rel="Stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.16/themes/smoothness/jquery-ui.css" />  
-  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.4.js"></script>  
-  <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.16/jquery-ui.js"></script>  
-  <script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+	<title><%= render_page_title %></title>
+	
+	<%= stylesheet_link_tag    "application" %>
+	<%= javascript_include_tag "application" %>
+	<%= csrf_meta_tags %>
+	
+	<link rel="Stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.16/themes/smoothness/jquery-ui.css" />  
+	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.4.js"></script>  
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.16/jquery-ui.js"></script>  
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
 
-  <meta property="og:title" content="Grassroots Policy" />
-  <!--<meta property="og:image" content="http://ia.media-imdb.com/rock.jpg"/>-->
-  <meta property="og:site_name" content="Grassroots Policy"/>
-  <meta property="fb:admins" content="robert.recalde"/>
-  <meta property="og:description" content="Add your voice to our democracy."/>
+	<%= (content = yield :meta) ? content : render('shared/meta') %>
 
 <script type="text/javascript">
 
@@ -33,15 +31,12 @@
 </head>
 <body>
 	<div id="grass-header" class="ui-corner-all">  
-		<span id="grass-header-text">
+		<a id="grass-header-text" href="/">
 			Grassroots Policy
-		</span>
+		</a>
 		<span id="grass-header-menu">
+			<a href="/about">About</a>&nbsp;|&nbsp;
 			<% if user_signed_in? %>
-				<!--
-					<a href="/ideas/">My Ideas</a>&nbsp;|&nbsp;
-					<a href="/categories/">My Issues</a>&nbsp;|&nbsp;
-				-->
 				<%= link_to('Edit registration', edit_user_registration_path) %>&nbsp;|&nbsp;
 				<%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
 			<% else %>
@@ -50,17 +45,14 @@
 			<% end %>
 		</span>
 	</div>
-	
-	<div id="grass-body" class="grass-body ui-corner-all ui-widget ui-widget-content">
+
+	<% if @excludeBody %>
 		<%= yield %>
-	</div>
+	<% else %>
+		<div id="grass-body" class="grass-body ui-corner-all ui-widget ui-widget-content">
+			<%= yield %>
+		</div>
+	<% end %>
 	
-	<script>
-		$(function () { 
-			$('#grass-header-text').click(function() {
-				window.location.href = "/";
-			});
-		});
-	</script>
 </body>
 </html>

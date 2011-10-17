@@ -8,10 +8,13 @@ body {
 	background-color:#006000;/*#404040;*/
 	color:white;
 	cursor:pointer;
+
 }
 #grass-header-text {
 	padding:4px;
 	font-size:28px;
+	color:white;
+	text-decoration:none;
 }
 #grass-header-menu {
 	float:right;
@@ -113,9 +116,11 @@ body {
 }
 .comment-body {
 	font-size: 13px;
-	cursor:pointer;
 	margin-bottom: 8px;
 }
-.comment-body:hover {
+.reply-link {
+	cursor:pointer;
+}
+.reply-link:hover {
 	text-decoration:underline;
 }

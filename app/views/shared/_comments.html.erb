@@ -1,0 +1,15 @@
+<% comments.each do |comment| %>
+	<div class="comment" idea_id="<%= comment.idea_id %>" comment_id="<%= comment.id %>">
+		<div class="comment-user">
+			Posted by <%= comment.user_alias %> (<%= time_ago_in_words(comment.created_at) %> ago)
+		</div>
+		<div class="comment-body reply-link">
+			<%= comment.comment %>
+		</div>
+		<% if !comment.leaf? %>
+		<div class="comment-children">
+			<%= render 'shared/comments', :comments => comment.children %>
+		</div>
+		<% end %>
+	</div>
+<% end %>

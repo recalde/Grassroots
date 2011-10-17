@@ -1,8 +1,14 @@
 class GrassrootsController < ApplicationController
   def index
-
-    render :layout => 'header_only'
+    @categories = Category.all
+    @excludeBody = true
+    render
   end 
+  
+  def about
+    @excludeBody = true
+    render
+  end
   
   # GET /vote
   # GET /vote.json
@@ -88,9 +94,11 @@ class GrassrootsController < ApplicationController
     if user_signed_in?
       @comment = Comment.create!(:comment => params[:comment])
       @comment.idea_id = params[:idea_id]
+      
       if params[:parent_id] && params[:parent_id] != 0
         @comment.parent_id = params[:parent_id]
       end
+      
       @comment.user_id = current_user.id
       @comment.save
       

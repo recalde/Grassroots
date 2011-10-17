@@ -6,48 +6,17 @@
 <% end %>
 
 <div id="grass-body">
+	<div id="tabs">
+		<ul id="tabs_ul">
+		<li><a href="/ideas?category_type=top&layout=raw">Top Ideas</a></li>
+		<li><a href="/ideas?category_type=new&layout=raw">New Ideas</a></li>
+	    <% @categories.each do |category| %>
+	        <li><a href="/ideas?category_id=<%= category.id %>&layout=raw"><%= category.name %></a></li>
+	    <% end %>
+		</ul>
+		</div>
+	</div>
 </div>  
-
-<script id="topicsTemplate" type="text/x-jquery-tmpl">
-<div id="tabs">
-	<div class="tabs-scroller">
-		<ul>
-		<li><a href="#category-top">Top Ideas</a></li>
-		<li><a href="#category-new">New Ideas</a></li>
-	    {{each topics}}
-	        <li><a href="#category-${id}">${name}</a></li>
-	    {{/each}}
-	</ul>
-	</div>
-	<div id="category-top" class="topic" category_type="top"></div>
-	<div id="category-new" class="topic" category_type="new"></div>
-	{{each topics}}
-	    <div id="category-${id}" class="topic" category_id="${id}"></div>
-	{{/each}}
-</div>
-</script>
-
-<script id="ideaTemplate" type="text/x-jquery-tmpl">
-<div class="idea ui-corner-all">
-	<div class="idea-vote ui-corner-all">
-		<div class="vote-yea">Yea</div>
-		<div class="vote-count">${vote_tally}</div>
-		<div class="vote-nay">Nay</div>
-	</div>
-	<div class="idea-body">
-		<div class="idea-subject">
-			<a href="/ideas/${seo_url}">${subject}</a>
-		</div>
-		<div class="idea-text">
-			${description}
-		</div>
-		<div class="idea-user">
-			Posted by ${user_alias} to ${category_name} (${prettyDate($data.created_at)})
-		</div>
-	</div>
-	<div class="idea-clear" />
-</div>
-</script>
 
 <script id="newIdeaDialogTemplate" type="text/x-jquery-tmpl">
 <div>
@@ -96,15 +65,29 @@
 			});
 		});
 
-		$('.new-idea').live('click', new_idea);
+		$('.new-idea').live('click', function(){
+			var category = $(this).attr('category_id');
+			new_idea(category);
+			return false;
+		});
 		
 		<% else %>
 		$('.vote-yea').live('click', login_dialog);
 		$('.vote-nay').live('click', login_dialog);
 		$('.new-idea').live('click', login_dialog);
 		<% end %>
-
-		renderCategories();
+		
+		$('#tabs').tabs({
+			panelTemplate: '<div class="grassroots-tab-panel"></div>',
+			idPrefix: 'grassroots-tab-',
+			load: function(event, ui) {
+				$(ui.panel).find('.new-idea').button();
+			}	
+		});
+		
+		$('#tabs_ul').wrap('<div class="tabs-scroller" />');
+		
+		loadCategories();
 		
 	});
 	

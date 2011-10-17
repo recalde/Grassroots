@@ -16,29 +16,34 @@ class IdeasController < ApplicationController
       @ideas = Idea.order("rank DESC").limit(limit)
     end
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { 
-        render :json => @ideas.to_json(:methods => [:vote_tally, :category_name, :user_alias, :seo_url]) 
-      }
+    if (params[:layout])
+      render :layout => params[:layout]
+    else
+      respond_to do |format|
+        format.html
+        format.json { 
+          render :json => @ideas.to_json(:methods => [:vote_tally, :category_name, :user_alias, :seo_url]) 
+        }
+      end
     end
+    
+
+
   end
 
   # GET /ideas/1
   # GET /ideas/1.json
   def show
+    
     @idea = Idea.find(params[:id])
-    
-    #@comment = Comment.create!(:comment => 'test')
-    #@comment.idea = @idea
-    #@comment.save
-    
     @votes = IdeaVote.where(:idea_id => params[:id]);
-    
     @comments = Comment.where(:idea_id => params[:id]).roots;
     
+    @excludeBody = true
+    @page_title = 'Grassroots Policy: ' + @idea.subject
+    
     respond_to do |format|
-      format.html { render :layout => 'header_only' } # show.html.erb 
+      format.html { render }
       format.json { render :json => @idea }
     end
   end
