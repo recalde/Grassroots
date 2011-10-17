@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Alias:</b>
+  <%= @user.alias %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @user.email %>
+</p>
+
+<table>
+	<tr>
+		<td>Login Count</td>
+		<td><%= @user.sign_in_count %></td>
+	</tr>
+	<tr>
+		<td>Current Session</td>
+		<td><%= time_ago_in_words(@user.current_sign_in_at) %> ago from <%= @user.current_sign_in_ip %></td>
+	</tr>
+	<tr>
+		<td>Previous Session</td>
+		<td><%= time_ago_in_words(@user.last_sign_in_at) %> ago from <%= @user.last_sign_in_ip %></td>
+	</tr>
+	<tr>
+		<td>Created</td>
+		<td><%= time_ago_in_words(@user.created_at) %> ago</td>
+	</tr>
+	<tr>
+		<td>Updated</td>
+		<td><%= time_ago_in_words(@user.updated_at) %> ago</td>
+	</tr>
+</table>
+
+<% if current_user.alias == "Rob" %>
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
+<% end %>

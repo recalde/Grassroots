@@ -1,7 +1,9 @@
 Grassroots::Application.routes.draw do
+
   devise_for :users
 
   resources :categories
+  resources :users
   resources :ideas
 
   match 'vote' => 'grassroots#vote'

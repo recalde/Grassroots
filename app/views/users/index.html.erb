@@ -1,0 +1,29 @@
+<h1>Listing users</h1>
+
+<table border="1">
+  <tr>
+    <th>Alias</th>
+    <th>Email</th>
+	<th>Login Count</th>
+	<th>Last Login</th>
+	<th>Created</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%= user.alias %></td>
+    <td><%= user.email %></td>
+	<td><%= user.sign_in_count %></td>
+	<td><%= time_ago_in_words(user.current_sign_in_at) %> ago</td>
+	<td><%= time_ago_in_words(user.created_at) %> ago</td>
+	<% if current_user.alias == "Rob" %>
+    <td><%= link_to 'Show', user %></td>
+    <td><%= link_to 'Edit', edit_user_path(user) %></td>
+    <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
+	<% end %>
+  </tr>
+<% end %>
+</table>
