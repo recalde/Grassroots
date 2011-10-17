@@ -81,7 +81,9 @@
 			panelTemplate: '<div class="grassroots-tab-panel"></div>',
 			idPrefix: 'grassroots-tab-',
 			load: function(event, ui) {
+				linkify($(ui.panel));
 				$(ui.panel).find('.new-idea').button();
+				
 			}	
 		});
 		
