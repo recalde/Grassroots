@@ -24,35 +24,37 @@
 
 <%= render 'shared/comments', :comments => @comments unless @comments.empty? %>
 
-<a id="root_comment" href="#">Comment</a>&nbsp;
-<a id="back_button" href="/">Back</a>
+<a id="root_comment" href="#" class="idea-button">Comment</a>&nbsp;
+<a id="back_button" href="/" class="idea-button">Back</a>
 
 <script>
 	
 	$(function () { 
-		$('#back_button').button();
-		$('#root_comment').button();
-		linkify($('#grass-body').first());
+
+
+		var ideas = $('.idea');
+		linkify(ideas);
 		
-		$('#tabs').tabs();
-			
+		var comments = $('.comment-body');
+		linkify(comments);
+		
+		$('.idea-button').button();
+				
 		<% if user_signed_in? %>
 		
-		$('.vote-yea').live('click', function() {
+		$('.vote-yea').click(function() {
 			vote(<%= @idea.id %>, 'yae', function(data) {
 				location.reload(true)
-				//$('.vote-count').html(data.vote_tally);
 			});
 		});
 		
-		$('.vote-nay').live('click', function(){
+		$('.vote-nay').click(function(){
 			vote(<%= @idea.id %>, 'nay', function(data) {
 				location.reload(true);
-				//$('.vote-count').html(data.vote_tally);
 			});
 		});
 		
-		$('.reply-link').live('click', function() {
+		$('.reply-link').click(function() {
 			var comment = $(this).parent();
 			var comment_id = comment.attr('comment_id');
 			var idea_id = comment.attr('idea_id');
@@ -67,11 +69,11 @@
 		
 		<% else %>
 		
-		$('.vote-yea').live('click', login_dialog);
-		$('.vote-nay').live('click', login_dialog);
-		$('.idea-comment').live('click', login_dialog);
-		$('#root_comment').live('click', login_dialog);
-		$('.reply-link').live('click', login_dialog);
+		$('.vote-yea').click(login_dialog);
+		$('.vote-nay').click(login_dialog);
+		$('.idea-comment').click(login_dialog);
+		$('#root_comment').click(login_dialog);
+		$('.reply-link').click(login_dialog);
 		
 		<% end %>
 	});
