@@ -1,4 +1,5 @@
 <%= form_for(@idea) do |f| %>
+
   <% if @idea.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@idea.errors.count, "error") %> prohibited this idea from being saved:</h2>
@@ -12,14 +13,6 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :user_id %><br />
-    <%= f.number_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :category_id %><br />
-    <%= f.number_field :category_id %>
-  </div>
-  <div class="field">
     <%= f.label :subject %><br />
     <%= f.text_field :subject %>
   </div>
@@ -27,19 +20,19 @@
     <%= f.label :description %><br />
 	<%= f.text_area :description %>
   </div>
-  <div class="field">
-    <%= f.label :yae_votes %><br />
-    <%= f.number_field :yae_votes %>
-  </div>
-  <div class="field">
-    <%= f.label :nay_votes %><br />
-    <%= f.number_field :nay_votes %>
-  </div>
-  <div class="field">
-    <%= f.label :rank %><br />
-    <%= f.text_field :rank %>
-  </div>
+
   <div class="actions">
-    <%= f.submit %>
+    <input id="save" name="commit" type="submit" value="Update Idea">&nbsp;
+	<%= link_to 'Cancel', @idea, :id => "back" %>
   </div>
+
 <% end %>
+
+<script>
+	
+	$(function () {
+		$('#save').button();
+		$('#back').button();
+	})
+	
+</script>

@@ -39,7 +39,7 @@ class IdeasController < ApplicationController
     @votes = IdeaVote.where(:idea_id => params[:id]);
     @comments = Comment.where(:idea_id => params[:id]).roots;
     
-    @excludeBody = true
+    @tabName = @idea.category_name
     @page_title = 'Grassroots Policy: ' + @idea.subject
     
     respond_to do |format|
@@ -63,6 +63,8 @@ class IdeasController < ApplicationController
   # GET /ideas/1/edit
   def edit
     @idea = Idea.find(params[:id])
+    @tabName = @idea.category_name
+    
   end
 
   # POST /ideas
@@ -84,8 +86,8 @@ class IdeasController < ApplicationController
   # PUT /ideas/1
   # PUT /ideas/1.json
   def update
-    if current_user.alias == "Rob"
-      @idea = Idea.find(params[:id])
+    @idea = Idea.find(params[:id])
+    if current_user.alias == "Rob" || @idea.user_id = current_user.id
 
       respond_to do |format|
         if @idea.update_attributes(params[:idea])

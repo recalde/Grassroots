@@ -48,11 +48,33 @@
 
 	<% if @excludeBody %>
 		<%= yield %>
+	<% elsif @tabName %>
+		<div id="grass-body">
+		<div id="tabs">
+			<ul>
+			<li><a href="#tab"><%= @tabName %></a></li>
+			</ul>
+			<div id="tab">
+				<%= yield %>
+			</div>
+		</div>
+		</div>
 	<% else %>
 		<div id="grass-body" class="grass-body ui-corner-all ui-widget ui-widget-content">
 			<%= yield %>
 		</div>
 	<% end %>
+
+<% if @tabName %>
+	<script>
+
+		$(function () { 
+			$('#back_link').button();
+			$('#tabs').tabs();
+		});
+
+	</script>
+<% end %>
 	
 </body>
 </html>

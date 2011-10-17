@@ -19,7 +19,7 @@
 		<% if user_signed_in? && current_user.alias == "Rob" %>
 		<div class="idea-text">
 		    <%= link_to 'Edit', edit_idea_path(idea) %>&nbsp;
-		    <%= link_to 'Destroy', idea, :confirm => 'Are you sure?', :method => :delete %>
+		    <%= link_to 'Delete', idea, :confirm => 'Are you sure?', :method => :delete %>
 		</div>
 		<% end %>
 	</div>

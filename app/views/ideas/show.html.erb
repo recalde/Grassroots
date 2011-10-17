@@ -5,47 +5,27 @@
 	<meta property="og:description" content="<%= @idea.description %>"/>
 <% end %>
 
-<div id="grass-body">
-<div id="tabs">
-	<ul>
-	<li><a href="#category-<%= @idea.category_id %>"><%= @idea.category_name %></a></li>
-	</ul>
-	<div id="category-<%= @idea.category_id %>" class="topic">
-		
-		
-		<%= render 'shared/idea', :idea => @idea %>
-		
-		<div class="idea ui-corner-all">
-			<div class="idea-body">
-				<div class="idea-subject">
-					Votes:
-				</div>
-				<div class="idea-text">
-				<% @votes.each do |vote| %>
-					<span class="user-<%= vote.vote %>">
-						<%= vote.user_alias %>
-					</span> 
-				<% end %>
-				</div>
-			</div>
+<%= render 'shared/idea', :idea => @idea %>
+
+<div class="idea ui-corner-all">
+	<div class="idea-body">
+		<div class="idea-subject">
+			Votes:
 		</div>
-		
-		<% if user_signed_in? %>
-		<% if current_user.alias == "Rob" %>
-		<%= link_to 'Edit', edit_idea_path(@idea) %><br/>
+		<div class="idea-text">
+		<% @votes.each do |vote| %>
+			<span class="user-<%= vote.vote %>">
+				<%= vote.user_alias %>
+			</span> 
 		<% end %>
-		<% end %>
-		
-		<br />
-		
-		<%= render 'shared/comments', :comments => @comments unless @comments.empty? %>
-		
-		<a id="root_comment" href="#">Comment</a>&nbsp;
-		<a id="back_button" href="/">Back</a>
-		
+		</div>
 	</div>
 </div>
-</div>
+
+<%= render 'shared/comments', :comments => @comments unless @comments.empty? %>
+
+<a id="root_comment" href="#">Comment</a>&nbsp;
+<a id="back_button" href="/">Back</a>
 
 <script>
 	

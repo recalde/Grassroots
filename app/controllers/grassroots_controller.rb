@@ -6,7 +6,7 @@ class GrassrootsController < ApplicationController
   end 
   
   def about
-    @excludeBody = true
+    @tabName = "About"
     render
   end
   
