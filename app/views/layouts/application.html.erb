@@ -12,6 +12,8 @@
 	<script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.16/jquery-ui.js"></script>  
 	<script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
 
+	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+	
 	<%= (content = yield :meta) ? content : render('shared/meta') %>
 
 <script type="text/javascript">
@@ -48,11 +50,11 @@
 
 	<% if @excludeBody %>
 		<%= yield %>
-	<% elsif @tabName %>
+	<% elsif @tab_name %>
 		<div id="grass-body">
 		<div id="tabs">
 			<ul>
-			<li><a href="#tab"><%= @tabName %></a></li>
+			<li><a href="#tab"><%= @tab_name %></a></li>
 			</ul>
 			<div id="tab">
 				<%= yield %>
@@ -65,11 +67,10 @@
 		</div>
 	<% end %>
 
-<% if @tabName %>
+<% if @tab_name %>
 	<script>
 
 		$(function () { 
-			$('#back_link').button();
 			$('#tabs').tabs();
 		});
 

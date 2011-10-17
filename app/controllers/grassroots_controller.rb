@@ -6,7 +6,7 @@ class GrassrootsController < ApplicationController
   end 
   
   def about
-    @tabName = "About"
+    @tab_name = "About"
     render
   end
   

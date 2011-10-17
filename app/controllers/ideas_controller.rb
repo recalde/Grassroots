@@ -39,7 +39,8 @@ class IdeasController < ApplicationController
     @votes = IdeaVote.where(:idea_id => params[:id]);
     @comments = Comment.where(:idea_id => params[:id]).roots;
     
-    @tabName = @idea.category_name
+    @tab_name = @idea.category_name
+    @show_facebook = true;
     @page_title = 'Grassroots Policy: ' + @idea.subject
     
     respond_to do |format|
@@ -63,7 +64,7 @@ class IdeasController < ApplicationController
   # GET /ideas/1/edit
   def edit
     @idea = Idea.find(params[:id])
-    @tabName = @idea.category_name
+    @tab_name = @idea.category_name
     
   end
 

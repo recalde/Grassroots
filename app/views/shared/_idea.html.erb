@@ -14,11 +14,13 @@
 		</div>
 		<div class="idea-user">
 			Posted by <%= idea.user_alias %> to <%= idea.category_name %> (<%= time_ago_in_words(idea.created_at) %> ago)
+			<% if @show_facebook %>
+				&nbsp;<a name="fb_share"></a>
+			<% end %>
 		</div>
-		
 		<% if user_signed_in? && current_user.alias == "Rob" %>
-		<div class="idea-text">
-		    <%= link_to 'Edit', edit_idea_path(idea) %>&nbsp;
+		<div class="idea-buttons">
+			<%= link_to 'Edit', edit_idea_path(idea) %>&nbsp;
 		    <%= link_to 'Delete', idea, :confirm => 'Are you sure?', :method => :delete %>
 		</div>
 		<% end %>
