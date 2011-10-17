@@ -50,18 +50,20 @@
 		<% if user_signed_in? %>
 		
 		$('.vote-yea').live('click', function() {
-			var tmplItem = $(this).tmplItem();
-			vote(tmplItem.data.id, 'yae', function(data) {
-				tmplItem.data.vote_tally = data.vote_tally;
-				tmplItem.update();
+			var idea_div = $(this).parent().parent();
+			var tally_div = $(this).next();
+			var idea_id = idea_div.attr('idea_id');
+			vote(idea_id, 'yae', function(data) {
+				tally_div.html(data.vote_tally);
 			});
 		});
 		
 		$('.vote-nay').live('click', function(){
-			var tmplItem = $(this).tmplItem();
-			vote(tmplItem.data.id, 'nay', function(data) {
-				tmplItem.data.vote_tally = data.vote_tally;
-				tmplItem.update();
+			var idea_div = $(this).parent().parent();
+			var tally_div = $(this).prev();
+			var idea_id = idea_div.attr('idea_id');
+			vote(idea_id, 'nay', function(data) {
+				tally_div.html(data.vote_tally);
 			});
 		});
 
