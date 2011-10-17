@@ -7,7 +7,7 @@
 	</div>
 	<div class="idea-body">
 		<div class="idea-subject">
-			<%= link_to idea.subject, idea %>
+			<a href="/ideas/<%= idea.seo_url %>"><%= idea.subject %></a>
 		</div>
 		<div class="idea-text">
 			<%= idea.description %>
