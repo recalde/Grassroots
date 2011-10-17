@@ -3,6 +3,10 @@ $category_data = [];
 $current_category_filter = {};
 $current_category_div = {};
 
+function dialog_close() {
+	$(this).remove();
+}
+
 function login_dialog(){
 	var dialogDiv = $('<div></div>');
 	dialogDiv.attr('title', 'You are not logged in.');
@@ -12,9 +16,10 @@ function login_dialog(){
 		height:200,
 		buttons: {
 			"Ok": function() {
-				$( this ).dialog( "close" );
+				$(this).dialog("close");
 			}
-		}
+		},
+		close: dialog_close
 	});
 }
 
@@ -45,6 +50,7 @@ function new_idea(category) {
 	newIdeaDiv.dialog({
 		width:600,
 		height:400,
+		close: dialog_close,
 		buttons: {
 			"Create": function() {
 				var new_idea_data = { 
@@ -54,7 +60,6 @@ function new_idea(category) {
 				};
 				
 				$(this).dialog("close");
-				$(this).remove();
 				
 				$.ajax({
 					url: '/new_idea',
@@ -67,10 +72,7 @@ function new_idea(category) {
 					}
 				});
 			},
-			Cancel: function() {
-				$(this).dialog( "close" );
-				$(this).remove();
-			}
+			Cancel: dialog_close
 		}
 	});
 }
@@ -107,7 +109,7 @@ function new_comment(idea_id, comment_id, comment_text) {
 			}
 			
 			$(this).dialog("close");
-			$(this).remove();
+
 			
 			$.ajax({
 				url: '/new_comment',
@@ -119,16 +121,14 @@ function new_comment(idea_id, comment_id, comment_text) {
 				
 			});
 		},
-		Cancel: function() {
-			$(this).dialog( "close" );
-			$(this).remove();
-		}
+		Cancel: dialog_close
 	};
 	
 	dialogDiv.dialog({ 
 		width:550, 
 		height:400,
-		buttons: buttons,
+		close: dialog_close,
+		buttons: buttons
 	});
 	
 }
