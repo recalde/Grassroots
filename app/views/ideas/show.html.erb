@@ -22,7 +22,7 @@
 	</div>
 </div>
 <%= render 'shared/comments', :comments => @comments unless @comments.empty? %>
-
+<br/>
 <a id="root_comment" href="#" class="idea-button">Comment</a>&nbsp;
 <a id="back_button" href="/" class="idea-button">Back</a>
 
@@ -54,7 +54,7 @@
 		});
 		
 		$('.reply-link').click(function() {
-			var comment = $(this).parent();
+			var comment = $(this).parent().parent();
 			var comment_id = comment.attr('comment_id');
 			var idea_id = comment.attr('idea_id');
 			var comment_text = $(this).html();
@@ -63,6 +63,13 @@
 		
 		$('#root_comment').click(function() {
 			new_comment(<%= @idea.id %>, null, null);
+			return false;
+		});
+		
+		$('.delete-comment').click(function() {
+			var comment = $(this).parent().parent();
+			var comment_id = comment.attr('comment_id');
+			delete_comment(comment_id);
 			return false;
 		});
 		

@@ -108,4 +108,27 @@ class GrassrootsController < ApplicationController
     end
   end
   
+  # POST /delete_comment
+  def delete_comment
+    @comment = Comment.find(params[:id])
+    
+    if current_user.alias == "Rob" || @comment.user_id = current_user.id
+      
+      if @comment.leaf?
+        @comment.destroy
+      else
+        @comment.comment = '[deleted]'
+        @comment.save
+      end
+      
+      render :json => { 
+            :status => :ok, 
+            :message => "Success!",
+            :html => "...insert html..."
+          }.to_json
+          
+    end
+    
+  end
+  
 end

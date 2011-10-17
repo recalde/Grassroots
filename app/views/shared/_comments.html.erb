@@ -3,8 +3,14 @@
 		<div class="comment-user">
 			Posted by <%= comment.user_alias %> (<%= time_ago_in_words(comment.created_at) %> ago)
 		</div>
-		<div class="comment-body reply-link">
+		<div class="comment-body">
 			<%= comment.comment %>
+		</div>
+		<div class="comment-actions">
+			<a href="#" class="reply-link">Reply</a>
+			<% if user_signed_in? && current_user.alias == "Rob" %>
+			&nbsp;<a href="#" class="delete-comment">Delete</a>
+			<% end %>
 		</div>
 		<% if !comment.leaf? %>
 		<div class="comment-children">

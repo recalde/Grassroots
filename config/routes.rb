@@ -7,6 +7,7 @@ Grassroots::Application.routes.draw do
   match 'vote' => 'grassroots#vote'
   match 'new_idea' => 'grassroots#new_idea'
   match 'new_comment' => 'grassroots#new_comment'
+  match 'delete_comment' => 'grassroots#delete_comment'
   match 'about' => 'grassroots#about'
   
   root :to => 'grassroots#index'

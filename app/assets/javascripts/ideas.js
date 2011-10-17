@@ -133,6 +133,19 @@ function new_comment(idea_id, comment_id, comment_text) {
 	
 }
 
+function delete_comment(comment_id) {
+	var commentData = { id: comment_id };
+	
+	$.ajax({
+		url: '/delete_comment',
+		dataType: 'json',
+		data: commentData,
+		success: function() { 
+			location.reload(true);
+		}
+	});
+}
+
 function vote(vote_id, vote, success) {
 	var voteData = { idea_id: vote_id, vote: vote };
 	
