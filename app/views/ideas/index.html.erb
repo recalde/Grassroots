@@ -2,6 +2,4 @@
 <%= render 'shared/idea', :idea => idea %>	
 <% end %>
 
-<% if user_signed_in? && current_user.alias == "Rob" %>
 <%= link_to 'New Idea', new_idea_path, :class => 'new-idea', 'category_id' => params[:category_id] %>
-<% end %>
